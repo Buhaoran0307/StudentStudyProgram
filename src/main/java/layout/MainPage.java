@@ -1,5 +1,6 @@
 package layout;
 
+import ConstantPacket.ConstantParameters;
 import entity.Subject;
 import util.LayoutUtil;
 
@@ -25,27 +26,29 @@ import java.util.ArrayList;
 
 
 public class MainPage extends JPanel {
-    private JTable subjectTable;
     private final String[] columnNames = {"ID", "Subject", "Grade","Character","Credit","Start Time"};
+    private final boolean[] sortOfColumns;
+    private final JLabel GPA;
+    private final JLabel rank;
+    private JTable subjectTable;
+    public JScrollPane jScrollPane;
+    public JButton test;
     /**
      * This Box object contains every component.
      */
     public Box vBox;
-    /**
-     * This is used to contain JList object : subjectList.
-     */
-    public JScrollPane jScrollPane;
-    public JButton test;
-    private final boolean[] sortOfColumns;
+
 
     /*
     Init attributes in this class
      */
     {
         this.test = new JButton(" refresh ");
-        this.vBox = Box.createVerticalBox();
-        this.jScrollPane = new JScrollPane();
+        this.GPA = new JLabel();
+        this.rank = new JLabel();
         this.sortOfColumns = new boolean[this.columnNames.length];
+        this.jScrollPane = new JScrollPane();
+        this.vBox = Box.createVerticalBox();
     }
 
     public MainPage(){
@@ -61,12 +64,18 @@ public class MainPage extends JPanel {
         jLabel.setFont(new Font(Font.SERIF,Font.BOLD,20));
         jLabel.setAlignmentX(CENTER_ALIGNMENT);
         this.vBox.add(jLabel);
-        this.vBox.add(Box.createVerticalStrut(30));
+        this.vBox.add(Box.createVerticalStrut(10));
+
+        //set GPA and rank
+        Box hBox = Box.createHorizontalBox();
+        hBox.add(this.GPA);
+        hBox.add(Box.createHorizontalStrut(50));
+        hBox.add(this.rank);
+        this.vBox.add(hBox);
+        this.vBox.add(Box.createVerticalStrut(5));
 
         //Init JTable and JScrollPane
         refresh("ID", true);
-        this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
-        this.jScrollPane.setPreferredSize(new Dimension(450,200));
         this.vBox.add(this.jScrollPane);
         this.vBox.add(Box.createVerticalStrut(10));
 
@@ -84,6 +93,9 @@ public class MainPage extends JPanel {
     }
 
     public void refresh(String column, boolean isAscending) {
+        this.GPA.setText("GPA : " + LayoutUtil.calculateGPA(WindowsFrame.localUser));
+        this.rank.setText("Rank : " + LayoutUtil.calculateGPARank(LayoutUtil.calculateGPA(WindowsFrame.localUser)));
+
         ArrayList<Subject> selectedSubjects = WindowsFrame.localUser.getSelectedSubjects();
         Object[][] data;
         DefaultTableModel model;
@@ -97,6 +109,7 @@ public class MainPage extends JPanel {
         //Create new subject table
         model = new unEditionTable(data, columnNames);
         this.subjectTable = new JTable(model);
+
         this.subjectTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -122,6 +135,8 @@ public class MainPage extends JPanel {
         });
         //Put JTable into jScrollPane
         this.jScrollPane.setViewportView(this.subjectTable);
+        this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
+        this.jScrollPane.setPreferredSize(new Dimension(450,200));
     }
 }
 

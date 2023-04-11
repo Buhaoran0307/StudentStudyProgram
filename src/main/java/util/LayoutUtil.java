@@ -1,6 +1,7 @@
 package util;
 
 import ConstantPacket.ConstantParameters;
+import entity.Student;
 import entity.Subject;
 import entity.SubjectInfo;
 
@@ -8,9 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class LayoutUtil {
@@ -117,5 +116,38 @@ public class LayoutUtil {
                 }
                 break;
         }
+    }
+
+    public static float calculateGPA(Student student){
+        ArrayList<Subject> selectSubject = student.getSelectedSubjects();
+        float totalMarks = 0;
+        float totalCredit = 0;
+        float credit;
+        for (Subject subject : selectSubject){
+            credit = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo()).getCredit();
+            totalCredit += credit;
+            if (subject.getGrade() >= 60){
+                totalMarks += credit*subject.getGrade();
+            }
+        }
+        return totalMarks/totalCredit;
+    }
+
+    public static int calculateGPARank(float GPA){
+        Student student;
+        int rank = 1;
+        Set<Integer> studentKey = ConstantParameters.studentMap.keySet();
+        Iterator<Integer> studentIterator = studentKey.iterator();
+        while (true){
+            if(studentIterator.hasNext()){
+                student = ConstantParameters.studentMap.get(studentIterator.next());
+                if (GPA < calculateGPA(student)){
+                    rank ++;
+                }
+            }else {
+                break;
+            }
+        }
+        return rank;
     }
 }
