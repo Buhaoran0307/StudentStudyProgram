@@ -7,6 +7,8 @@ import util.LayoutUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class SubjectPage extends JPanel {
@@ -17,19 +19,21 @@ public class SubjectPage extends JPanel {
     public Box vBox2;
     public Box vBox;
     public Box hBox;
-    public JButton test;
-    public Subject subject = ConstantParameters.studentMap.get(2020001).getSelectedSubjects().get(1);
+    public JButton back;
+    public Subject subject;
     public SubjectInfo subjectInfo;
 
     {
-        this.test = new JButton(" back ");
+        this.back = new JButton(" back ");
         this.vBox1 = Box.createVerticalBox();
         this.vBox2 = Box.createVerticalBox();
         this.vBox = Box.createVerticalBox();
         this.hBox = Box.createHorizontalBox();
-        this.subjectInfo = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo());
     }
-    public SubjectPage(){
+
+    public SubjectPage(Subject subject){
+        this.subject = subject;
+        this.subjectInfo = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo());
         System.out.println("Create SubjectPage...");
         this.vBox.add(Box.createVerticalStrut(50));
         JLabel subjectLabel = new JLabel(subjectInfo.getSubjectName());
@@ -59,12 +63,12 @@ public class SubjectPage extends JPanel {
         String startTime = mapSubjectInfo.get("Start Time");
         String rank = mapSubjectInfo.get("Rank");
 
-        System.out.println(subjectNo);
+        /*System.out.println(subjectNo);
         System.out.println(grade);
         System.out.println(character);
         System.out.println(credit);
         System.out.println(startTime);
-        System.out.println(rank);
+        System.out.println(rank);*/
 
 
         JLabel jID2 = new JLabel(subjectNo);
@@ -85,8 +89,9 @@ public class SubjectPage extends JPanel {
         this.hBox.add(vBox2);
         this.vBox.add(hBox);
         this.vBox.add(Box.createVerticalStrut(30));
-        this.vBox.add(this.test);
-        this.test.setAlignmentX(CENTER_ALIGNMENT);
+        this.vBox.add(this.back);
+        this.back.setAlignmentX(CENTER_ALIGNMENT);
+        this.back.addActionListener(e -> WindowsFrame.cardLayout.show(WindowsFrame.cards,"MainPage"));
         this.add(this.vBox);
         System.out.println("Create SubjectPage : [successful]");
     }

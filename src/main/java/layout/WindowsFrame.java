@@ -1,6 +1,5 @@
 package layout;
 
-import ConstantPacket.ConstantParameters;
 import entity.Student;
 import util.LayoutUtil;
 
@@ -28,39 +27,40 @@ public class WindowsFrame extends JFrame {
     /**
      * This instant is an object of CardLayout which helps control cards to change Page.
      */
-    public CardLayout cardLayout;
+    public static CardLayout cardLayout;
     /**
      * This instant contains every Page used in the game which is invoked by cardLayout.
      */
-    public JPanel cards;
-    public MainPage mainPage;
+    public static JPanel cards;
+    private final MainPage mainPage;
+    private SubjectPage subjectPage;
 
     static {
         FRAME_X = 400;
         FRAME_Y = 100;
         FRAME_HEIGHT = 480;
         FRAME_WIDTH = 600;
-        //localUser = ConstantParameters.studentMap.get(2020001);
+        cardLayout = new CardLayout();
+        cards = new JPanel(cardLayout);
     }
 
     {
-        this.cardLayout = new CardLayout();
-        this.cards = new JPanel(this.cardLayout);
         this.mainPage = new MainPage();
     }
 
     public WindowsFrame() {
         this.initJPanel();
-        this.initActionSource(this.cardLayout);
+        this.initActionSource(cardLayout);
         this.initFrame();
     }
 
     private void initJPanel() {
-        this.cards.add(this.mainPage, "MainPage");
+        cards.add(this.mainPage, "MainPage");
         this.add(cards);
     }
     private void initActionSource(CardLayout cardLayout) {
-
+        mainPage.setWindowsFrame(this);
+        mainPage.personalImage.setWindowsFrame(this);
     }
     private void initFrame() {
         this.setTitle(" Student journey ");
@@ -68,6 +68,6 @@ public class WindowsFrame extends JFrame {
         this.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
-        this.setAlwaysOnTop(true);
+        //this.setAlwaysOnTop(true);
     }
 }
