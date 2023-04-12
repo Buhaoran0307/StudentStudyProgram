@@ -1,15 +1,15 @@
-package layout;
+package util;
 
 import ConstantPacket.ConstantParameters;
 import com.google.gson.Gson;
 import entity.Student;
-import util.JsonFileReader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.invoke.ConstantBootstraps;
 
 public class Register extends JFrame{
     private JTextField name;
@@ -18,11 +18,12 @@ public class Register extends JFrame{
     private JTextField password;
 
     private JButton signUp;
+    private JButton goBack;
     Container container = this.getContentPane();
     public Register(){
         //采用所有元素手动布局的方式
         this.setBounds(520,30,450,600);
-        this.setTitle("Login");
+        this.setTitle("Register");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBackground(Color.WHITE);
@@ -99,14 +100,24 @@ public class Register extends JFrame{
 
         //添加button
         signUp = new JButton("Sign Up");
-        signUp.setSize(150,40);
-        signUp.setLocation(115,30);
+        signUp.setSize(140,40);
+        signUp.setLocation(200,30);
         signUp.setFont(new Font("Comic Sans MS",Font.BOLD,18));
         signUp.setBackground(Color.WHITE);
 
+        //添加返回Button
+        goBack = new JButton("Go Back");
+        goBack.setSize(140,40);
+        goBack.setLocation(50,30);
+        goBack.setFont(new Font("Comic Sans MS",Font.BOLD,18));
+        goBack.setBackground(Color.WHITE);
+
         //添加响应
         signUp.addActionListener(new signUpListener());
+        goBack.addActionListener(new goBackListener());
         buttonPanel.add(signUp);
+        buttonPanel.add(goBack);
+
         //    //设置完成
         this.setVisible(true);
     }
@@ -115,11 +126,28 @@ public class Register extends JFrame{
     class signUpListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            //非空验证
+            if(name.getText().equals("")||nickname.getText().equals("")||password.getText().equals("")||phone.getText().equals("")){
+                JOptionPane.showMessageDialog(Register.this, "Warning! None of the blank could be space.");
+                return;
+            }
+            //数据合法性验证--电话号码是否纯数字以及位数是否合理
+            try{
+                int phoneNumber = Integer.parseInt(phone.getText());
+            }catch (Exception err){
+                JOptionPane.showMessageDialog(Register.this, "Warning! Your phone number should be pure numbers!");
+                return;
+            }
+            if(lenth(Integer.parseInt(phone.getText()))!=8){
+                JOptionPane.showMessageDialog(Register.this, "Warning! The lenth of your phone number is invalid!");
+                return;
+            }
 
             String name_from_text = name.getText();
-            String nickName_from_text = nickname.getText();
             int phoneNumber_from_text = Integer.parseInt(phone.getText());
+            String nickName_from_text = nickname.getText();
             String password_from_text = password.getText();
+
             //轮询给出学号
             new JsonFileReader().readJson();
             int temp_username=2020001;
@@ -144,7 +172,23 @@ public class Register extends JFrame{
             JOptionPane.showMessageDialog(null, "Successfully Registered!\nYour id is "+temp_username+".");
             dispose();
         }
-}
+    }
+
+    class goBackListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+        }
+    }
+
+//    //判断数字位数
+    public int lenth(int number){
+        int count = 0;
+        while(number!=0){
+            number = number / 10;
+            count++;
+        }
+        return count;
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
