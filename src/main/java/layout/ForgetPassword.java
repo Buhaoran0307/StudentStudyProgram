@@ -136,18 +136,10 @@ public class ForgetPassword extends JFrame {
         private boolean checkID(int studentID)
         {
             readJson();
-            if(studentMap.get(studentID) != null)
-            {
-                return true;
-            }
-            else return false;
+            return studentMap.get(studentID) != null;
         }
         private boolean checkPhoneNumber(int studentID, int phoneNumber){
-            if(studentMap.get(studentID).getPhoneNumber() == phoneNumber)
-            {
-                return true;
-            }
-            else return false;
+            return studentMap.get(studentID).getPhoneNumber() == phoneNumber;
         }
         private void changePassword(int studentID,String password)
         {
@@ -158,9 +150,4 @@ public class ForgetPassword extends JFrame {
 
 
     }
-
-    public static void main(String[] args) {
-        new ForgetPassword();
-    }
-
 }

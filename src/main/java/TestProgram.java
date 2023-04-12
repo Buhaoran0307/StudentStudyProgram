@@ -1,5 +1,6 @@
 import ConstantPacket.ConstantParameters;
 import entity.Student;
+import layout.Login;
 import layout.WindowsFrame;
 import org.junit.jupiter.api.Test;
 import util.JsonFileReader;
@@ -12,12 +13,12 @@ public class TestProgram {
         //System.out.println(ConstantParameters.subjectInfoMap.get(1));
         //System.out.println(ConstantParameters.studentMap.get(2020001));
 
-        //new Login();
+        new Login();
         //new PersonalPage();
         //new WindowsFrame();
-        JsonFileReader.readJson();
-        WindowsFrame.localUser = ConstantParameters.studentMap.get(2020002);
-        new WindowsFrame();
+        //JsonFileReader.readJson();
+        //WindowsFrame.localUser = ConstantParameters.studentMap.get(2020002);
+        //new WindowsFrame();
     }
 
     @Test
@@ -25,5 +26,11 @@ public class TestProgram {
         JsonFileReader.readJson();
         WindowsFrame.localUser = ConstantParameters.studentMap.get(2020002);
         new WindowsFrame();
+    }
+
+    @Test
+    public void testLogin(){
+        JsonFileReader.readJson();
+        new Login();
     }
 }

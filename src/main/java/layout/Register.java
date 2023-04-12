@@ -3,13 +3,13 @@ package layout;
 import ConstantPacket.ConstantParameters;
 import com.google.gson.Gson;
 import entity.Student;
+import util.JsonFileReader;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.invoke.ConstantBootstraps;
 
 public class Register extends JFrame{
     private JTextField name;
@@ -149,7 +149,7 @@ public class Register extends JFrame{
             String password_from_text = password.getText();
 
             //轮询给出学号
-            new JsonFileReader().readJson();
+            JsonFileReader.readJson();
             int temp_username=2020001;
             while(ConstantParameters.studentMap.get(temp_username)!=null){
                 temp_username++;
@@ -188,13 +188,5 @@ public class Register extends JFrame{
             count++;
         }
         return count;
-    }
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Register();
-            }
-        });
     }
 }

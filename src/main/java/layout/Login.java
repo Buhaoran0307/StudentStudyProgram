@@ -95,11 +95,11 @@ public class Login extends JFrame {
         registerButton.addActionListener(new RegisterListener());
 
         setVisible(true);
-        //    //设置完成
+        //设置完成
 
     }
 
-//    //内部类实现button响应
+    //内部类实现button响应
     class LoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -119,7 +119,7 @@ public class Login extends JFrame {
 
         //登陆验证
         private boolean authenticate(String username, String password) {
-            new JsonFileReader().readJson();
+            JsonFileReader.readJson();
             int username_int = Integer.parseInt(username);
             //是否查询非空，是否登陆成功
             if(ConstantParameters.studentMap.get(username_int) != null){
@@ -136,9 +136,4 @@ public class Login extends JFrame {
             new Register();
         }
     }
-//    //实现结束
-    public static void main(String[] args) {
-        new Login();
-    }
-
 }
