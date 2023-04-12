@@ -103,6 +103,13 @@ public class Login extends JFrame {
     class LoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+             //验证非空
+            String test_password = new String(passwordField.getPassword());
+            if(usernameField.getText().equals("")||test_password.equals("")){
+                JOptionPane.showMessageDialog(Login.this, "Warning! None of the blank could be space.");
+                return;
+            }
+
             String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
 
