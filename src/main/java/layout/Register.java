@@ -171,12 +171,14 @@ public class Register extends JFrame{
 
             JOptionPane.showMessageDialog(null, "Successfully Registered!\nYour id is "+temp_username+".");
             dispose();
+            new Login();
         }
     }
 
     class goBackListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             dispose();
+            new Login();
         }
     }
 

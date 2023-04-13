@@ -1,6 +1,7 @@
 package layout;
 
 import entity.Student;
+import util.InputValidation;
 import util.JsonFileReader;
 import util.JsonFileWriter;
 
@@ -110,12 +111,24 @@ public class ForgetPassword extends JFrame {
             String inputUserName = userNameField.getText();
             int studentID = Integer.parseInt(inputUserName);
             if(checkID(studentID)){
+                boolean isValidPhone = InputValidation.checkPhoneNumber(phoneNumberFiled.getText());
+                if(! isValidPhone)
+                {
+                    JOptionPane.showMessageDialog(ForgetPassword.this,"Please enter the phone number in the correct format ");
+                    return;
+                }
                 int phoneNumber = Integer.parseInt(phoneNumberFiled.getText());
                 if (checkPhoneNumber(studentID, phoneNumber)) {
                     String password = new String(newPasswordField.getPassword());
+                    boolean isValidPassword = InputValidation.checkPassword(password);
+                    if(! isValidPassword)
+                    {
+                        JOptionPane.showMessageDialog(ForgetPassword.this,"password should contains at least one uppercase letter, one lowercase letter, and one digit, and no other symbols");
+                        return;
+                    }
                     changePassword(studentID, password);
                     JOptionPane messageDialog = new JOptionPane();
-                    messageDialog.showMessageDialog(null, "Password has been modified");
+                    messageDialog.showMessageDialog(ForgetPassword.this, "Password has been modified");
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
@@ -133,14 +146,33 @@ public class ForgetPassword extends JFrame {
                 JOptionPane.showMessageDialog(ForgetPassword.this,"wrong user name","wrong userName",JOptionPane.NO_OPTION);
             }
         }
+
+        /**
+         * this method is used to check whether the input studentID is in the data set.
+         * @param studentID the input userID
+         * @return ture:valid ID; false: invalid ID
+         */
         private boolean checkID(int studentID)
         {
             readJson();
             return studentMap.get(studentID) != null;
         }
+
+        /**
+         * this method is used to check whether the input phone number is correct
+         * @param studentID user ID
+         * @param phoneNumber input phone number
+         * @return whether phone number is matched.
+         */
         private boolean checkPhoneNumber(int studentID, int phoneNumber){
             return studentMap.get(studentID).getPhoneNumber() == phoneNumber;
         }
+
+        /**
+         * this method is used to change the password
+         * @param studentID user ID
+         * @param password new password
+         */
         private void changePassword(int studentID,String password)
         {
             Student current = studentMap.get(studentID);
