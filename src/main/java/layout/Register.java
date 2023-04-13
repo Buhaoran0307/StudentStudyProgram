@@ -3,6 +3,7 @@ package layout;
 import ConstantPacket.ConstantParameters;
 import com.google.gson.Gson;
 import entity.Student;
+import util.InputValidation;
 import util.JsonFileReader;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class Register extends JFrame{
     private JButton goBack;
     Container container = this.getContentPane();
     public Register(){
-        //采用所有元素手动布局的方式
+        //All elements layouts are handcrafted.
         this.setBounds(520,30,450,600);
         this.setTitle("Register");
         this.setResizable(false);
@@ -29,120 +30,126 @@ public class Register extends JFrame{
         this.setBackground(Color.WHITE);
         container.setLayout(null);
 
-//   //设置输入框布局
+//   //Setting the layout of statements
         JPanel textPanel = new JPanel();
         textPanel.setSize(450,400);
         textPanel.setLocation(10,0);
         textPanel.setLayout(null);
         container.add(textPanel);
-        //name文字布局
+        //layout for "username"
         JLabel usernameLabel = new JLabel("Name:");
         usernameLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         usernameLabel.setSize(200,20);
         usernameLabel.setLocation(50,50);
         textPanel.add(usernameLabel);
 
-        //name输入框布局
+        //layout for "username enter block"
         name = new JTextField();
         name.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         name.setSize(300,40);
         name.setLocation(50,85);
         textPanel.add(name);
 
-        //nickname文字布局
+        //layout for "nickname"
         JLabel nicknameLabel = new JLabel("Nikcname:");
         nicknameLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         nicknameLabel.setSize(200,20);
         nicknameLabel.setLocation(50,140);
         textPanel.add(nicknameLabel);
 
-        //nickname输入框布局
+        //layout for "nickname enter block"
         nickname = new JTextField();
         nickname.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         nickname.setSize(300,40);
         nickname.setLocation(50,175);
         textPanel.add(nickname);
 
-        //phone文字布局
+        //layout for "phone"
         JLabel phoneLabel = new JLabel("Phone No.:");
         phoneLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         phoneLabel.setSize(200,20);
         phoneLabel.setLocation(50,230);
         textPanel.add(phoneLabel);
 
-        //phone输入框布局
+        //layout for "phone enter block"
         phone = new JTextField();
         phone.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         phone.setSize(300,40);
         phone.setLocation(50,265);
         textPanel.add(phone);
 
-        //password文字布局
+        //layout for "password"
         JLabel passwordLable = new JLabel("Password:");
         passwordLable.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         passwordLable.setSize(200,20);
         passwordLable.setLocation(50,320);
         textPanel.add(passwordLable);
 
-        //phone输入框布局
+        //layout for "password enter block"
         password = new JPasswordField();
         password.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         password.setSize(300,40);
         password.setLocation(50,355);
         textPanel.add(password);
-  //    //设置完成
-  //    //设置Button和布局
+  //    //setting over
+  //    //layout for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450,200);
         buttonPanel.setLocation(10,400);
         buttonPanel.setLayout(null);
         container.add(buttonPanel);
 
-        //添加button
+        //add buttons
         signUp = new JButton("Sign Up");
         signUp.setSize(140,40);
         signUp.setLocation(200,30);
         signUp.setFont(new Font("Comic Sans MS",Font.BOLD,18));
         signUp.setBackground(Color.WHITE);
 
-        //添加返回Button
+        //add "goback" button
         goBack = new JButton("Go Back");
         goBack.setSize(140,40);
         goBack.setLocation(50,30);
         goBack.setFont(new Font("Comic Sans MS",Font.BOLD,18));
         goBack.setBackground(Color.WHITE);
 
-        //添加响应
+        //add action listeners
         signUp.addActionListener(new signUpListener());
         goBack.addActionListener(new goBackListener());
         buttonPanel.add(signUp);
         buttonPanel.add(goBack);
 
-        //    //设置完成
+        //    //setting over
         this.setVisible(true);
     }
 
-//    //button响应
+//    //button action  listener classes
     class signUpListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            //非空验证
+            //to authenticate if the inputs are empty
             if(name.getText().equals("")||nickname.getText().equals("")||password.getText().equals("")||phone.getText().equals("")){
                 JOptionPane.showMessageDialog(Register.this, "Warning! None of the blank could be space.");
                 return;
             }
-            //数据合法性验证--电话号码是否纯数字以及位数是否合理
+            //to authenticate if phone number is valid
             try{
-                int phoneNumber = Integer.parseInt(phone.getText());
+                long phoneNumber = Long.parseLong(phone.getText());
             }catch (Exception err){
                 JOptionPane.showMessageDialog(Register.this, "Warning! Your phone number should be pure numbers!");
                 return;
             }
-            if(lenth(Integer.parseInt(phone.getText()))!=8){
+            if(lenth(Long.parseLong(phone.getText()))!=8){
                 JOptionPane.showMessageDialog(Register.this, "Warning! The lenth of your phone number is invalid!");
                 return;
             }
-
+            //to authenticate if password is valid
+            String test_password = password.getText();
+            if(!InputValidation.checkPassword(test_password)){
+                System.out.println(test_password);
+                JOptionPane.showMessageDialog(Register.this, "Warning! The password should contain at least a capital letter, a lower case letter and a number!");
+                return;
+            }
             String name_from_text = name.getText();
             int phoneNumber_from_text = Integer.parseInt(phone.getText());
             String nickName_from_text = nickname.getText();
@@ -183,7 +190,7 @@ public class Register extends JFrame{
     }
 
 //    //判断数字位数
-    public int lenth(int number){
+    public int lenth(long number){
         int count = 0;
         while(number!=0){
             number = number / 10;
