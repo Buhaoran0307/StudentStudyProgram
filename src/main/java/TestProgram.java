@@ -1,5 +1,6 @@
 import ConstantPacket.ConstantParameters;
 import entity.Student;
+import layout.ForgetPassword;
 import layout.Login;
 import layout.WindowsFrame;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,8 @@ public class TestProgram {
         //System.out.println(ConstantParameters.subjectInfoMap.get(1));
         //System.out.println(ConstantParameters.studentMap.get(2020001));
 
-        new Login();
+        //new Login();
+        new ForgetPassword();
         //new PersonalPage();
         //new WindowsFrame();
         //JsonFileReader.readJson();
@@ -33,4 +35,5 @@ public class TestProgram {
         JsonFileReader.readJson();
         new Login();
     }
+
 }

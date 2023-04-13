@@ -93,6 +93,7 @@ public class Login extends JFrame {
 
         loginButton.addActionListener(new LoginListener());
         registerButton.addActionListener(new RegisterListener());
+        forgottenButton.addActionListener(new forgetPasswordListener());
 
         setVisible(true);
         //设置完成
@@ -117,7 +118,7 @@ public class Login extends JFrame {
                 JOptionPane.showMessageDialog(Login.this, "Login successful!");
                 int StudentID = Integer.parseInt(username);
                 WindowsFrame.localUser = ConstantParameters.studentMap.get(StudentID);
-                setVisible(false);
+                dispose();
                 new WindowsFrame();
             } else {
                 JOptionPane.showMessageDialog(Login.this, "Invalid username or password.");
@@ -140,7 +141,17 @@ public class Login extends JFrame {
     class RegisterListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            dispose();
             new Register();
+        }
+    }
+
+    class forgetPasswordListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            new ForgetPassword();
         }
     }
 }
