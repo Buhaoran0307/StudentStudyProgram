@@ -17,6 +17,7 @@ public class PersonalPage extends JFrame {
     PanelStyle p4;
     PanelStyle p5;
     LastPanel p6;
+    int User;
     //用来返回主页面
     private WindowsFrame windowsFrame;
 
@@ -38,19 +39,20 @@ public class PersonalPage extends JFrame {
     }
 
     private void addComponent() {
+        User = WindowsFrame.localUser.getStudentNo();
         Box total = Box.createVerticalBox();
         this.add(total);
         JLabel welcome = new JLabel("Welcome To Personal Page");
         welcome.setFont(new Font("Papyrus", Font.PLAIN, 30));
-        p1 = new PanelStyle("name", ConstantParameters.studentMap.get(2020001).getName());
-        p2 = new PanelStyle("StudentNo", Integer.toString(ConstantParameters.studentMap.get(2020001).getStudentNo()));
-        p3 = new PanelStyle("nickName", ConstantParameters.studentMap.get(2020001).getNickName());
-        p4 = new PanelStyle("phoneNumber", Integer.toString(ConstantParameters.studentMap.get(2020001).getPhoneNumber()));
-        p5 = new PanelStyle("password", ConstantParameters.studentMap.get(2020001).getPassword());
+        p1 = new PanelStyle("name", ConstantParameters.studentMap.get(User).getName());
+        p2 = new PanelStyle("StudentNo", Integer.toString(ConstantParameters.studentMap.get(User).getStudentNo()));
+        p3 = new PanelStyle("nickName", ConstantParameters.studentMap.get(User).getNickName());
+        p4 = new PanelStyle("phoneNumber", Integer.toString(ConstantParameters.studentMap.get(User).getPhoneNumber()));
+        p5 = new PanelStyle("password", ConstantParameters.studentMap.get(User).getPassword());
         p6 = new LastPanel();
         total.add(welcome);
-        total.add(p1);
         total.add(p2);
+        total.add(p1);
         total.add(p3);
         total.add(p4);
         total.add(p5);
@@ -71,12 +73,29 @@ public class PersonalPage extends JFrame {
             tipL.setPreferredSize(new Dimension(150, 300));
             contextL.setPreferredSize(new Dimension(200, 300));
             JButton modify = new JButton("modify");
-            this.add("West", tipL);
-            this.add("Center", contextL);
-            this.add("East", modify);
+
             tipL.setFont(new Font("Tahoma", Font.PLAIN, 20));
             contextL.setFont(new Font("Tahoma", Font.PLAIN, 20));
             modify.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+
+            if(tip.equals("password")){
+                String a="";
+                for(int i=0;i<context.length();i++)a+=".";
+                contextL.setText(a);
+            }
+
+                //第一项
+            this.add("West", tipL);
+
+            //第二项
+
+
+            this.add("Center", contextL);
+
+            //第三项
+            if(!tip.equals("StudentNo"))
+                this.add("East", modify);
             pack();
             this.setOpaque(false);
             //监听器
@@ -105,8 +124,15 @@ public class PersonalPage extends JFrame {
             TextField contextL = new TextField(context, 20);
             contextL.setFont(new Font("Tahoma", Font.PLAIN, 20));
             contextL.setPreferredSize(new Dimension(200, 30));
+            JPasswordField passwordField = new JPasswordField();
+            passwordField.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
+            passwordField.setPreferredSize(new Dimension(200, 30));
+
+
+
             p1.add(tipL);
-            p1.add(contextL);
+            if(tip.equals("password"))p1.add(passwordField);
+            else p1.add(contextL);
 
             //第二行
             JPanel p2 = new JPanel();
@@ -121,15 +147,16 @@ public class PersonalPage extends JFrame {
 
             //密码，多出的第二行
             TextField contextL2 = new TextField();
+            JPasswordField passwordField2=new JPasswordField();;
             if (tip.equals("password")) {
                 JPanel p3 = new JPanel();
 
                 JLabel tipL2 = new JLabel("confirm password");
                 tipL2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                contextL2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-                contextL2.setPreferredSize(new Dimension(200, 30));
+                passwordField2.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
+                passwordField2.setPreferredSize(new Dimension(200, 30));
                 p3.add(tipL2);
-                p3.add(contextL2);
+                p3.add(passwordField2);
                 total.add(p3);
             }
             total.add(p2);
@@ -139,29 +166,48 @@ public class PersonalPage extends JFrame {
                 dispose();
             });
             //监听器
+            JPasswordField finalPasswordField = passwordField2;
             save.addActionListener(e -> {
                 //弹窗
                 switch (tip) {
                     case "name":
-                        ConstantParameters.studentMap.get(2020001).setName(contextL.getText());
+                        ConstantParameters.studentMap.get(User).setName(contextL.getText());
                         break;
                     case "StudentNo":
-                        ConstantParameters.studentMap.get(2020001).setStudentNo(Integer.parseInt(contextL.getText()));
+                        ConstantParameters.studentMap.get(User).setStudentNo(Integer.parseInt(contextL.getText()));
                         break;
                     case "nickName":
-                        ConstantParameters.studentMap.get(2020001).setNickName(contextL.getText());
+                        ConstantParameters.studentMap.get(User).setNickName(contextL.getText());
                         break;
                     case "phoneNumber":
-                        ConstantParameters.studentMap.get(2020001).setPhoneNumber(Integer.parseInt(contextL.getText()));
+                        if(util.InputValidation.checkPhoneNumber(contextL.getText()))
+                        ConstantParameters.studentMap.get(User).setPhoneNumber(Integer.parseInt(contextL.getText()));
+                        else {
+                            JOptionPane.showMessageDialog(null, "Please type in the correct phone number!");
+//                            dispose();
+//                            new MyDialog(tip,context);
+                            contextL.setText("");
+                            return;
+                        }
                         break;
                     case "password":
-                        if (contextL.getText().equals(contextL2.getText()) && !contextL.getText().equals(""))
-                            ConstantParameters.studentMap.get(2020001).setPassword(contextL.getText());
-                        else {
+                        System.out.println(passwordField.getPassword());
+                        System.out.println(finalPasswordField.getPassword());
+                        // && !passwordField.getPassword().equals("")
+                        if (new String(passwordField.getPassword()).equals(new String(finalPasswordField.getPassword())) )
+                            ConstantParameters.studentMap.get(User).setPassword(new String(finalPasswordField.getPassword()));
+                        else if (!util.InputValidation.checkPassword(new String(passwordField.getPassword()))) {
+                            JOptionPane.showMessageDialog(null, "Please type in the password in correct form!");
+//                            dispose();
+//                            new MyDialog(tip,context);
+                            passwordField2.setText("");
+                            return;
+
+                        } else {
                             JOptionPane.showMessageDialog(null, "Please type in the same password!");
 //                            dispose();
 //                            new MyDialog(tip,context);
-                            contextL2.setText("");
+                            passwordField2.setText("");
                             return;
                         }
                         break;
@@ -192,9 +238,16 @@ public class PersonalPage extends JFrame {
             this.add(back);
             this.add(logOut);
             //监听器
-            logOut.addActionListener(e -> dispose());
+            back.addActionListener(e -> {
+
+                dispose();
+            });
             //监听器
-            logOut.addActionListener(e -> dispose());
+            logOut.addActionListener(e ->{
+                new Login();
+                WindowsFrame.localUser=null;
+                dispose();
+            } );
         }
 
 

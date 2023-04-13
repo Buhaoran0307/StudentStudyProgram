@@ -2,6 +2,7 @@ import ConstantPacket.ConstantParameters;
 import entity.Student;
 import layout.ForgetPassword;
 import layout.Login;
+import layout.PersonalPage;
 import layout.WindowsFrame;
 import org.junit.jupiter.api.Test;
 import util.JsonFileReader;
