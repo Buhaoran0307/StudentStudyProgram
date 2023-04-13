@@ -41,6 +41,7 @@ public class LayoutUtil {
             for (int i=0; i<columNum; i++){
                 data[0][i] = "NULL";
             }
+            System.out.println("[log] You didn't select any subject !");
         }else {
             data = new Object[rowNum][columNum];
             for (int i=0; i<rowNum; i++){
@@ -120,6 +121,9 @@ public class LayoutUtil {
 
     public static float calculateGPA(Student student){
         ArrayList<Subject> selectSubject = student.getSelectedSubjects();
+        if(selectSubject == null){
+            return 0;
+        }
         float totalMarks = 0;
         float totalCredit = 0;
         float credit;

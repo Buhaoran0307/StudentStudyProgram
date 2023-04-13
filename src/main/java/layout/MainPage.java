@@ -126,6 +126,9 @@ public class MainPage extends JPanel {
         this.GPA.setText("GPA : " + LayoutUtil.calculateGPA(WindowsFrame.localUser));
         this.rank.setText("Rank : " + LayoutUtil.calculateGPARank(LayoutUtil.calculateGPA(WindowsFrame.localUser)));
 
+        if (WindowsFrame.localUser.getSelectedSubjects() == null){
+            WindowsFrame.localUser.setSelectedSubjects(new ArrayList<>());
+        }
         ArrayList<Subject> selectedSubjects = WindowsFrame.localUser.getSelectedSubjects();
         Object[][] data;
         DefaultTableModel model;
@@ -143,6 +146,9 @@ public class MainPage extends JPanel {
         this.subjectTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (selectedSubjects.size() == 0){
+                    return;
+                }
                 int row = subjectTable.getSelectedRow();
                 String id = (String) subjectTable.getValueAt(row, 0);
                 String name = (String) subjectTable.getValueAt(row, 1);
