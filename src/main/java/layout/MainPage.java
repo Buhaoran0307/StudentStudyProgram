@@ -40,7 +40,9 @@ public class MainPage extends JPanel {
     /**
      * This Box object contains every component.
      */
-    public Box vBox;
+    private final Box vRBox;
+    private final Box vLBox;
+    public JSplitPane splitPane;
     private MainFrame mainFrame;
     private JTable subjectTable;
     private HashMap<String, Object> subjectMap;
@@ -55,20 +57,17 @@ public class MainPage extends JPanel {
         this.GPA = new JLabel();
         this.rank = new JLabel();
         this.sortOfColumns = new boolean[this.columnNames.length];
-        for (int i =0; i<columnNames.length; i++){
+        for (int i = 0; i < columnNames.length; i++) {
             sortOfColumns[i] = true;
         }
         this.jScrollPane = new JScrollPane();
-        this.vBox = Box.createVerticalBox();
+        this.vRBox = Box.createVerticalBox();
+        this.vLBox = Box.createVerticalBox();
     }
 
     public MainPage() {
         System.out.println("[log] Create MainFrame .......");
-        this.vBox.add(Box.createVerticalStrut(70));
-
-        //set person image
-        JPanel jPanel = new JPanel();
-        jPanel.setLayout(new BorderLayout());
+        this.vRBox.add(Box.createVerticalStrut(70));
 
         //Set JLabel
         JLabel tittle = new JLabel(" Subject list");
@@ -78,43 +77,46 @@ public class MainPage extends JPanel {
         }
         tittle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
         tittle.setHorizontalAlignment(SwingConstants.CENTER);
+        this.vRBox.add(tittle);
         //set person picture
+
         //personalImage.setImageIcon(new ImageIcon());
-        jPanel.add(personalImage, BorderLayout.WEST);
-        jPanel.add(tittle, BorderLayout.CENTER);
-        jPanel.setPreferredSize(new Dimension(450, jPanel.getPreferredSize().height));
+        this.vLBox.add(personalImage);
         /*Border border = BorderFactory.createLineBorder(Color.RED, 2);
         jPanel.setBorder(border);*/
-        this.vBox.add(jPanel);
-        this.vBox.add(Box.createVerticalStrut(10));
+        this.vRBox.add(Box.createVerticalStrut(10));
 
         //set GPA and rank
-        Box hBox1 = Box.createHorizontalBox();
-        hBox1.add(this.GPA);
-        hBox1.add(Box.createHorizontalStrut(50));
-        hBox1.add(this.rank);
-        this.vBox.add(hBox1);
-        this.vBox.add(Box.createVerticalStrut(5));
+        Box hBox = Box.createHorizontalBox();
+        hBox.add(this.GPA);
+        hBox.add(Box.createHorizontalStrut(50));
+        hBox.add(this.rank);
+        this.vRBox.add(hBox);
+        this.vRBox.add(Box.createVerticalStrut(5));
 
         //Init JTable and JScrollPane
         refresh();
-        this.vBox.add(this.jScrollPane);
-        this.vBox.add(Box.createVerticalStrut(10));
+        this.vRBox.add(this.jScrollPane);
+        this.vRBox.add(Box.createVerticalStrut(10));
 
-        //Set JButton
+        //Set refresh Button
         Image image1 = IOUtil.gainImage("src/main/resources/Icon/refresh.png");
         if (image1 != null) {
             this.refresh.setIcon(new ImageIcon(image1));
         }
-        this.vBox.add(this.refresh);
-        this.refresh.setAlignmentX(CENTER_ALIGNMENT);
+        this.refresh.setHorizontalAlignment(SwingConstants.CENTER);
+        this.vRBox.add(this.refresh);
         this.refresh.addActionListener(e -> {
             refresh();
             JOptionPane.showConfirmDialog(mainFrame, "Refresh successfully !", "Confirmation", JOptionPane.DEFAULT_OPTION);
         });
-        this.add(this.vBox);
 
-        this.add(this.vBox);
+        this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, vLBox, vRBox);
+        this.splitPane.setResizeWeight(0.2);
+        this.splitPane.setDividerSize(0);
+        this.splitPane.setEnabled(false);
+        this.splitPane.setBorder(null);
+        this.add(this.splitPane);
         System.out.println("[log] Create MainFrame : successful");
     }
 
@@ -180,12 +182,16 @@ public class MainPage extends JPanel {
                 String selectColumn = (String) colModel.getColumn(index).getHeaderValue();
                 sortOfColumns[index] = !sortOfColumns[index];
                 refresh(selectColumn, sortOfColumns[index]);
-                System.out.println("[log] select column \""+columnNames[index]+"\"");
+                System.out.println("[log] select column \"" + columnNames[index] + "\"");
             }
         });
         //Put JTable into jScrollPane
         this.jScrollPane.setViewportView(this.subjectTable);
         this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
+        int tableHeight = subjectTable.getRowHeight() * subjectTable.getRowCount();
+        if (tableHeight > 200) {
+            tableHeight = 200;
+        }
         this.jScrollPane.setPreferredSize(new Dimension(450, 200));
     }
 
