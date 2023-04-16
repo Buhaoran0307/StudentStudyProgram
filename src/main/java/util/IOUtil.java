@@ -8,7 +8,10 @@ import entity.Student;
 import entity.SubjectInfo;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Map;
 
@@ -49,7 +52,6 @@ public class IOUtil {
     public static void writeStudentJson() {
         Gson gson = new Gson();
         String filePath = "src/main/java/DataSet/student.json";
-
         try {
             FileWriter writer = new FileWriter(new File(filePath));
             writer.write(gson.toJson(ConstantParameters.studentMap));
@@ -58,5 +60,28 @@ public class IOUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Image selectPicture() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter imageFilter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(imageFilter);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                BufferedImage bufferedImage = ImageIO.read(selectedFile);
+                if (bufferedImage != null) {
+                    return bufferedImage;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select image !", "Error", JOptionPane.ERROR_MESSAGE);
+                    return selectPicture();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Can't load that image, please try again !", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
     }
 }
