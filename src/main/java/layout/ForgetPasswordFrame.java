@@ -20,6 +20,7 @@ public class ForgetPasswordFrame extends JFrame {
     private JPasswordField newPasswordField;
     private JTextField phoneNumberFiled;
     private JButton confirmButton;
+    private JButton backButton;
 
     public ForgetPasswordFrame() {
         //set forget password page's frame
@@ -95,6 +96,16 @@ public class ForgetPasswordFrame extends JFrame {
         buttonPanel.add(confirmButton);
         confirmButton.addActionListener(new confirmButtonListener());
 
+        //set back button
+        backButton = new JButton("Back");
+        backButton.setFont(new Font("Comic Sans Ms", Font.BOLD, 15));
+        backButton.setSize(80, 30);
+        backButton.setLocation(40, 150);
+        backButton.setBackground(Color.white);
+        buttonPanel.add(backButton);
+        backButton.addActionListener(new BackListener());
+
+
 
         setVisible(true);
     }
@@ -102,10 +113,10 @@ public class ForgetPasswordFrame extends JFrame {
     class confirmButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-//            if(newPasswordField.getText().equals("")||userNameField.getText().equals("")||phoneNumberFiled.getText().equals("")){
-//                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "Warning! None of the blank could be space.");
-//                return;
-//            }
+            if(newPasswordField.getText().equals("")||userNameField.getText().equals("")||phoneNumberFiled.getText().equals("")){
+                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "Warning! None of the blank could be space.");
+                return;
+            }
             String inputUserName = userNameField.getText();
             int studentID = Integer.parseInt(inputUserName);
             if (checkID(studentID)) {
@@ -176,7 +187,14 @@ public class ForgetPasswordFrame extends JFrame {
             current.setPassword(password);
             writeStudentJson();
         }
-
-
     }
+    class BackListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new LoginFrame();
+            dispose();
+        }
+    }
+
 }
