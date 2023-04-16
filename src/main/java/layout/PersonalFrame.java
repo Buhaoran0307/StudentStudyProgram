@@ -1,16 +1,15 @@
 package layout;
 
 import ConstantPacket.ConstantParameters;
-import util.JsonFileWriter;
+import util.DataUtil;
+import util.IOUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import static layout.WindowsFrame.*;
+import static layout.MainFrame.*;
 
-public class PersonalPage extends JFrame {
+public class PersonalFrame extends JFrame {
     PanelStyle p1;
     PanelStyle p2;
     PanelStyle p3;
@@ -19,10 +18,10 @@ public class PersonalPage extends JFrame {
     LastPanel p6;
     int User;
     //用来返回主页面
-    private WindowsFrame windowsFrame;
+    private MainFrame mainFrame;
 
-    public PersonalPage(WindowsFrame windowsFrame) {
-        this.windowsFrame = windowsFrame;
+    public PersonalFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         iniFrame();
     }
 
@@ -32,6 +31,9 @@ public class PersonalPage extends JFrame {
         addComponent();
         this.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
         this.setVisible(true);
+        Image image;
+        image = IOUtil.gainImage("src/main/resources/Icon/EStudy.png");
+        this.setIconImage(image);
     }
 
     void disposeMain() {
@@ -39,7 +41,7 @@ public class PersonalPage extends JFrame {
     }
 
     private void addComponent() {
-        User = WindowsFrame.localUser.getStudentNo();
+        User = MainFrame.localUser.getStudentNo();
         Box total = Box.createVerticalBox();
         this.add(total);
         JLabel welcome = new JLabel("Welcome To Personal Page");
@@ -166,7 +168,6 @@ public class PersonalPage extends JFrame {
                 dispose();
             });
             //监听器
-            JPasswordField finalPasswordField = passwordField2;
             save.addActionListener(e -> {
                 //弹窗
                 switch (tip) {
@@ -180,7 +181,7 @@ public class PersonalPage extends JFrame {
                         ConstantParameters.studentMap.get(User).setNickName(contextL.getText());
                         break;
                     case "phoneNumber":
-                        if(util.InputValidation.checkPhoneNumber(contextL.getText()))
+                        if(DataUtil.checkPhoneNumber(contextL.getText()))
                         ConstantParameters.studentMap.get(User).setPhoneNumber(Integer.parseInt(contextL.getText()));
                         else {
                             JOptionPane.showMessageDialog(null, "Please type in the correct phone number!");
@@ -192,11 +193,11 @@ public class PersonalPage extends JFrame {
                         break;
                     case "password":
                         System.out.println(passwordField.getPassword());
-                        System.out.println(finalPasswordField.getPassword());
+                        System.out.println(passwordField2.getPassword());
                         // && !passwordField.getPassword().equals("")
-                        if (new String(passwordField.getPassword()).equals(new String(finalPasswordField.getPassword())) )
-                            ConstantParameters.studentMap.get(User).setPassword(new String(finalPasswordField.getPassword()));
-                        else if (!util.InputValidation.checkPassword(new String(passwordField.getPassword()))) {
+                        if (new String(passwordField.getPassword()).equals(new String(passwordField2.getPassword())) )
+                            ConstantParameters.studentMap.get(User).setPassword(new String(passwordField2.getPassword()));
+                        else if (!DataUtil.checkPassword(new String(passwordField.getPassword()))) {
                             JOptionPane.showMessageDialog(null, "Please type in the password in correct form!");
 //                            dispose();
 //                            new MyDialog(tip,context);
@@ -213,17 +214,13 @@ public class PersonalPage extends JFrame {
                         break;
                 }
 
-                JsonFileWriter.writeStudentJson();
+                IOUtil.writeStudentJson();
                 dispose();
                 disposeMain();
-                new PersonalPage(windowsFrame);
+                new PersonalFrame(mainFrame);
 
             });
-
-
             getContentPane().add(total);
-
-
         }
     }
 
@@ -239,13 +236,14 @@ public class PersonalPage extends JFrame {
             this.add(logOut);
             //监听器
             back.addActionListener(e -> {
-
                 dispose();
+                mainFrame.setVisible(true);
             });
             //监听器
             logOut.addActionListener(e ->{
-                new Login();
-                WindowsFrame.localUser=null;
+                new LoginFrame();
+                MainFrame.localUser=null;
+                mainFrame.dispose();
                 dispose();
             } );
         }

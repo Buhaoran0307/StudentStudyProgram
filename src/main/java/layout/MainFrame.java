@@ -1,12 +1,12 @@
 package layout;
 
 import entity.Student;
-import util.LayoutUtil;
+import util.IOUtil;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class WindowsFrame extends JFrame {
+public class MainFrame extends JFrame {
     public static Student localUser;
     /**
      * The position of JFrame.(X-axis)
@@ -40,15 +40,15 @@ public class WindowsFrame extends JFrame {
         FRAME_Y = 100;
         FRAME_HEIGHT = 480;
         FRAME_WIDTH = 600;
-        cardLayout = new CardLayout();
-        cards = new JPanel(cardLayout);
     }
 
     {
         this.mainPage = new MainPage();
     }
 
-    public WindowsFrame() {
+    public MainFrame() {
+        cardLayout = new CardLayout();
+        cards = new JPanel(cardLayout);
         this.initJPanel();
         this.initActionSource(cardLayout);
         this.initFrame();
@@ -59,12 +59,14 @@ public class WindowsFrame extends JFrame {
         this.add(cards);
     }
     private void initActionSource(CardLayout cardLayout) {
-        mainPage.setWindowsFrame(this);
-        mainPage.personalImage.setWindowsFrame(this);
+        mainPage.setMainFrame(this);
+        mainPage.personalImage.setMainFrame(this);
     }
     private void initFrame() {
         this.setTitle(" Student journey ");
-        this.setIconImage(LayoutUtil.gainImage("src/main/resources/"+"Wordle!.png"));
+        Image image;
+        image = IOUtil.gainImage("src/main/resources/Icon/EStudy.png");
+        this.setIconImage(image);
         this.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);

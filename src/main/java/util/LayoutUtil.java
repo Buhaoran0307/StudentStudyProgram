@@ -1,34 +1,13 @@
 package util;
 
 import ConstantPacket.ConstantParameters;
-import entity.Student;
 import entity.Subject;
 import entity.SubjectInfo;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.*;
 
 
 public class LayoutUtil {
-    public static Image gainImage(String path) {
-        Image image = null;
-        FileInputStream fileInputStream;
-        File file = new File(String.valueOf(path));
-        if (file.exists() && file.isFile()){
-            try {
-                fileInputStream = new FileInputStream(file);
-                image = ImageIO.read(fileInputStream);
-            }catch (Exception e){
-                System.out.println("Something wrong with the image in " + path);
-            }
-        }else {
-            System.out.println("There is no image " + path);
-        }
-        return image;
-    }
 
     public static Object[][] getSubjectInfo(ArrayList<Subject> selectedSubjects, String[] columnNames, String column, boolean isAscending){
         Object[][] data;
@@ -119,39 +98,4 @@ public class LayoutUtil {
         }
     }
 
-    public static float calculateGPA(Student student){
-        ArrayList<Subject> selectSubject = student.getSelectedSubjects();
-        if(selectSubject == null){
-            return 0;
-        }
-        float totalMarks = 0;
-        float totalCredit = 0;
-        float credit;
-        for (Subject subject : selectSubject){
-            credit = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo()).getCredit();
-            totalCredit += credit;
-            if (subject.getGrade() >= 60){
-                totalMarks += credit*subject.getGrade();
-            }
-        }
-        return totalMarks/totalCredit;
-    }
-
-    public static int calculateGPARank(float GPA){
-        Student student;
-        int rank = 1;
-        Set<Integer> studentKey = ConstantParameters.studentMap.keySet();
-        Iterator<Integer> studentIterator = studentKey.iterator();
-        while (true){
-            if(studentIterator.hasNext()){
-                student = ConstantParameters.studentMap.get(studentIterator.next());
-                if (GPA < calculateGPA(student)){
-                    rank ++;
-                }
-            }else {
-                break;
-            }
-        }
-        return rank;
-    }
 }

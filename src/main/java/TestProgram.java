@@ -1,40 +1,20 @@
-import ConstantPacket.ConstantParameters;
-import entity.Student;
-import layout.ForgetPassword;
-import layout.Login;
-import layout.PersonalPage;
-import layout.WindowsFrame;
-import org.junit.jupiter.api.Test;
-import util.JsonFileReader;
+import layout.LoginFrame;
+import util.IOUtil;
 
 public class TestProgram {
     public static void main(String[] args) {
         //new Initialization().DataInitialization();
-        JsonFileReader.readJson();
+        IOUtil.readJson();
 
         //System.out.println(ConstantParameters.subjectInfoMap.get(1));
         //System.out.println(ConstantParameters.studentMap.get(2020001));
 
-        new Login();
-        //new ForgetPassword();
-        //new PersonalPage();
-        //new WindowsFrame();
+        new LoginFrame();
+        //new ForgetPasswordFrame();
+        //new PersonalFrame();
+        //new MainFrame();
         //JsonFileReader.readJson();
-        //WindowsFrame.localUser = ConstantParameters.studentMap.get(2020002);
-        //new WindowsFrame();
+        //MainFrame.localUser = ConstantParameters.studentMap.get(2020002);
+        //new MainFrame();
     }
-
-    @Test
-    public void testWindowFrame(){
-        JsonFileReader.readJson();
-        WindowsFrame.localUser = ConstantParameters.studentMap.get(2020002);
-        new WindowsFrame();
-    }
-
-    @Test
-    public void testLogin(){
-        JsonFileReader.readJson();
-        new Login();
-    }
-
 }

@@ -7,8 +7,6 @@ import util.LayoutUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class SubjectPage extends JPanel {
@@ -91,7 +89,7 @@ public class SubjectPage extends JPanel {
         this.vBox.add(Box.createVerticalStrut(30));
         this.vBox.add(this.back);
         this.back.setAlignmentX(CENTER_ALIGNMENT);
-        this.back.addActionListener(e -> WindowsFrame.cardLayout.show(WindowsFrame.cards,"MainPage"));
+        this.back.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.cards,"MainPage"));
         this.add(this.vBox);
         System.out.println("Create SubjectPage : [successful]");
     }

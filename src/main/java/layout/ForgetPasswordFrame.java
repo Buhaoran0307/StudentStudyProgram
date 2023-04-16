@@ -1,9 +1,7 @@
 package layout;
 
 import entity.Student;
-import util.InputValidation;
-import util.JsonFileReader;
-import util.JsonFileWriter;
+import util.DataUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,22 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
-import util.JsonFileWriter;
 
 import static ConstantPacket.ConstantParameters.studentMap;
-import static util.JsonFileReader.readJson;
-import static util.JsonFileWriter.writeStudentJson;
+import static util.IOUtil.readJson;
+import static util.IOUtil.writeStudentJson;
 
-public class ForgetPassword extends JFrame {
+public class ForgetPasswordFrame extends JFrame {
+    Container container = this.getContentPane();
     private JTextField userNameField;
     private JPasswordField newPasswordField;
     private JTextField phoneNumberFiled;
     private JButton confirmButton;
 
-
-    Container container = this.getContentPane();
-    public ForgetPassword()
-    {
+    public ForgetPasswordFrame() {
         //set forget password page's frame
         this.setBounds(520, 30, 450, 600);
         this.setTitle("Forget Password");
@@ -37,23 +32,23 @@ public class ForgetPassword extends JFrame {
 
         //set input Panel
         JPanel inputPanel = new JPanel();
-        inputPanel.setSize(450,320);
-        inputPanel.setLocation(10,30);
+        inputPanel.setSize(450, 320);
+        inputPanel.setLocation(10, 30);
         inputPanel.setLayout(null);
         container.add(inputPanel);
 
         //set userName text label
         JLabel userNameLabel = new JLabel("Username:");
-        userNameLabel.setSize(200,20);
-        userNameLabel.setFont(new Font("Comic sans Ms",Font.BOLD,20));
-        userNameLabel.setLocation(50,50);
+        userNameLabel.setSize(200, 20);
+        userNameLabel.setFont(new Font("Comic sans Ms", Font.BOLD, 20));
+        userNameLabel.setLocation(50, 50);
         inputPanel.add(userNameLabel);
 
         //set UserName text Filed
         userNameField = new JTextField();
-        userNameField.setFont(new Font("Comic sans Ms",Font.BOLD,20));
-        userNameField.setLocation(50,85);
-        userNameField.setSize(300,40);
+        userNameField.setFont(new Font("Comic sans Ms", Font.BOLD, 20));
+        userNameField.setLocation(50, 85);
+        userNameField.setSize(300, 40);
         inputPanel.add(userNameField);
 
         //set password text label
@@ -86,16 +81,16 @@ public class ForgetPassword extends JFrame {
 
         //set button panel
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setSize(450,200);
-        buttonPanel.setLocation(10,335);
+        buttonPanel.setSize(450, 200);
+        buttonPanel.setLocation(10, 335);
         buttonPanel.setLayout(null);
         container.add(buttonPanel);
 
         //set confirm button
         confirmButton = new JButton("confirm");
         confirmButton.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
-        confirmButton.setSize(130,40);
-        confirmButton.setLocation(130,30);
+        confirmButton.setSize(130, 40);
+        confirmButton.setLocation(130, 30);
         confirmButton.setBackground(Color.white);
         buttonPanel.add(confirmButton);
         confirmButton.addActionListener(new confirmButtonListener());
@@ -103,78 +98,76 @@ public class ForgetPassword extends JFrame {
 
         setVisible(true);
     }
-    class confirmButtonListener implements ActionListener
-    {
+
+    class confirmButtonListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             String inputUserName = userNameField.getText();
             int studentID = Integer.parseInt(inputUserName);
-            if(checkID(studentID)){
-                boolean isValidPhone = InputValidation.checkPhoneNumber(phoneNumberFiled.getText());
-                if(! isValidPhone)
-                {
-                    JOptionPane.showMessageDialog(ForgetPassword.this,"Please enter the phone number in the correct format ");
+            if (checkID(studentID)) {
+                boolean isValidPhone = DataUtil.checkPhoneNumber(phoneNumberFiled.getText());
+                if (!isValidPhone) {
+                    JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "Please enter the phone number in the correct format ");
                     return;
                 }
                 int phoneNumber = Integer.parseInt(phoneNumberFiled.getText());
                 if (checkPhoneNumber(studentID, phoneNumber)) {
                     String password = new String(newPasswordField.getPassword());
-                    boolean isValidPassword = InputValidation.checkPassword(password);
-                    if(! isValidPassword)
-                    {
-                        JOptionPane.showMessageDialog(ForgetPassword.this,"password should contains at least one uppercase letter, one lowercase letter, and one digit, and no other symbols");
+                    boolean isValidPassword = DataUtil.checkPassword(password);
+                    if (!isValidPassword) {
+                        JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "password should contains at least one uppercase letter, one lowercase letter, and one digit, and no other symbols");
                         return;
                     }
                     changePassword(studentID, password);
                     JOptionPane messageDialog = new JOptionPane();
-                    messageDialog.showMessageDialog(ForgetPassword.this, "Password has been modified");
+                    JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "Password has been modified");
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
                             messageDialog.setVisible(false);
                             setVisible(false);
-                            new Login();
+                            new LoginFrame();
                         }
                     }, 1);
-                }else{
-                    JOptionPane.showMessageDialog(ForgetPassword.this,"wrong phone number");
+                } else {
+                    JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong phone number");
                 }
 
-            }else{
-                JOptionPane.showMessageDialog(ForgetPassword.this,"wrong user name","wrong userName",JOptionPane.NO_OPTION);
+            } else {
+                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong user name", "wrong userName", JOptionPane.NO_OPTION);
             }
         }
 
         /**
          * this method is used to check whether the input studentID is in the data set.
+         *
          * @param studentID the input userID
          * @return ture:valid ID; false: invalid ID
          */
-        private boolean checkID(int studentID)
-        {
+        private boolean checkID(int studentID) {
             readJson();
             return studentMap.get(studentID) != null;
         }
 
         /**
          * this method is used to check whether the input phone number is correct
-         * @param studentID user ID
+         *
+         * @param studentID   user ID
          * @param phoneNumber input phone number
          * @return whether phone number is matched.
          */
-        private boolean checkPhoneNumber(int studentID, int phoneNumber){
+        private boolean checkPhoneNumber(int studentID, int phoneNumber) {
             return studentMap.get(studentID).getPhoneNumber() == phoneNumber;
         }
 
         /**
          * this method is used to change the password
+         *
          * @param studentID user ID
-         * @param password new password
+         * @param password  new password
          */
-        private void changePassword(int studentID,String password)
-        {
+        private void changePassword(int studentID, String password) {
             Student current = studentMap.get(studentID);
             current.setPassword(password);
             writeStudentJson();
