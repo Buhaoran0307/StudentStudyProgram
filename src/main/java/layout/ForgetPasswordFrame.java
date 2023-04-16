@@ -102,6 +102,10 @@ public class ForgetPasswordFrame extends JFrame {
     class confirmButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+//            if(newPasswordField.getText().equals("")||userNameField.getText().equals("")||phoneNumberFiled.getText().equals("")){
+//                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "Warning! None of the blank could be space.");
+//                return;
+//            }
             String inputUserName = userNameField.getText();
             int studentID = Integer.parseInt(inputUserName);
             if (checkID(studentID)) {
