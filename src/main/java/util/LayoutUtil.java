@@ -17,9 +17,7 @@ public class LayoutUtil {
         HashMap<String,String> mapSubjectInfo;
         if (rowNum == 0){
             data = new Object[1][columNum];
-            for (int i=0; i<columNum; i++){
-                data[0][i] = "NULL";
-            }
+            Arrays.fill(data[0], "NULL");
             System.out.println("[log] You didn't select any subject !");
         }else {
             data = new Object[rowNum][columNum];

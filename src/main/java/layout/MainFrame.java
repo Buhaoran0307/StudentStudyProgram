@@ -33,7 +33,6 @@ public class MainFrame extends JFrame {
      */
     public static JPanel cards;
     private final MainPage mainPage;
-    private SubjectPage subjectPage;
 
     static {
         FRAME_X = 400;
