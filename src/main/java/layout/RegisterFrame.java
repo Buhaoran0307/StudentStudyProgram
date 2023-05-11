@@ -22,6 +22,27 @@ public class RegisterFrame extends JFrame{
     private JButton goBack;
     Container container = this.getContentPane();
     public RegisterFrame(){
+
+        Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
+        JLabel buptImgLable = new JLabel(new ImageIcon(buptImage));
+        buptImgLable.setLocation(10,10);
+        buptImgLable.setSize(51,48);
+        container.add(buptImgLable);
+
+        Image QMULImage = IOUtil.gainImage("src/main/resources/Icon/QMUL.png");
+        JLabel QMULImgLable = new JLabel(new ImageIcon(QMULImage));
+        QMULImgLable.setLocation(240,10);
+        QMULImgLable.setSize(190,48);
+        container.add(QMULImgLable);
+
+        //set Login information
+        JLabel infoLabel = new JLabel("<html>Hello,the news!<br> Please to enter the information below to " +
+                "sign up.</html>");
+        infoLabel.setSize(500,150);
+        infoLabel.setLocation(35,20);
+        infoLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 15));
+        container.add(infoLabel);
+
         //All elements layouts are handcrafted.
         this.setBounds(520,30,450,600);
         this.setTitle("Register");
@@ -33,11 +54,13 @@ public class RegisterFrame extends JFrame{
 //   //Setting the layout of statements
         JPanel textPanel = new JPanel();
         textPanel.setSize(450,400);
-        textPanel.setLocation(10,0);
+        textPanel.setLocation(10,85);
         textPanel.setLayout(null);
         container.add(textPanel);
         //layout for "username"
-        JLabel usernameLabel = new JLabel("Name:");
+        Image userIDImg = IOUtil.gainImage("src/main/resources/Icon/userID.jpg");
+        ImageIcon userIDIcon = new ImageIcon(userIDImg);
+        JLabel usernameLabel = new JLabel("Name:",userIDIcon,JLabel.LEFT);
         usernameLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         usernameLabel.setSize(200,20);
         usernameLabel.setLocation(50,50);
@@ -51,7 +74,9 @@ public class RegisterFrame extends JFrame{
         textPanel.add(name);
 
         //layout for "nickname"
-        JLabel nicknameLabel = new JLabel("Nikcname:");
+        Image nickNameImg = IOUtil.gainImage("src/main/resources/Icon/NickName.jpg");
+        ImageIcon nickNameIcon = new ImageIcon(nickNameImg);
+        JLabel nicknameLabel = new JLabel("Nickname:",nickNameIcon,JLabel.LEFT);
         nicknameLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         nicknameLabel.setSize(200,20);
         nicknameLabel.setLocation(50,140);
@@ -65,7 +90,9 @@ public class RegisterFrame extends JFrame{
         textPanel.add(nickname);
 
         //layout for "phone"
-        JLabel phoneLabel = new JLabel("Phone No.:");
+        Image phoneImg = IOUtil.gainImage("src/main/resources/Icon/phone.jpg");
+        ImageIcon phoneIcon = new ImageIcon(phoneImg);
+        JLabel phoneLabel = new JLabel("Phone No.:",phoneIcon,JLabel.LEFT);
         phoneLabel.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         phoneLabel.setSize(200,20);
         phoneLabel.setLocation(50,230);
@@ -79,7 +106,9 @@ public class RegisterFrame extends JFrame{
         textPanel.add(phone);
 
         //layout for "password"
-        JLabel passwordLable = new JLabel("Password:");
+        Image passwordImg = IOUtil.gainImage("src/main/resources/Icon/password.jpg");
+        ImageIcon passwordIcon = new ImageIcon(passwordImg);
+        JLabel passwordLable = new JLabel("Password:",passwordIcon,JLabel.LEFT);
         passwordLable.setFont(new Font("Comic Sans Ms",Font.BOLD,20));
         passwordLable.setSize(200,20);
         passwordLable.setLocation(50,320);
@@ -95,7 +124,7 @@ public class RegisterFrame extends JFrame{
   //    //layout for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450,200);
-        buttonPanel.setLocation(10,400);
+        buttonPanel.setLocation(10,485);
         buttonPanel.setLayout(null);
         container.add(buttonPanel);
 

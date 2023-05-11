@@ -13,6 +13,7 @@ public class LoginFrame extends JFrame {
     private JButton loginButton;
     private JButton registerButton;
     private JButton forgottenButton;
+    private JLabel buptImgLable;
 
     Container container = this.getContentPane();
 
@@ -29,14 +30,44 @@ public class LoginFrame extends JFrame {
         this.setBackground(Color.WHITE);
         container.setLayout(null);
 
+
+        Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
+        buptImgLable = new JLabel(new ImageIcon(buptImage));
+        buptImgLable.setLocation(10,10);
+        buptImgLable.setSize(51,48);
+        container.add(buptImgLable);
+
+        Image QMULImage = IOUtil.gainImage("src/main/resources/Icon/QMUL.png");
+        JLabel QMULImgLable = new JLabel(new ImageIcon(QMULImage));
+        QMULImgLable.setLocation(240,10);
+        QMULImgLable.setSize(190,48);
+        container.add(QMULImgLable);
+
+        //set welcome text
+        JLabel welcomeLabel = new JLabel("<html>Welcome to<br> student study system!</html>");
+        welcomeLabel.setSize(500,100);
+        welcomeLabel.setLocation(12,50);
+        welcomeLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 25));
+        container.add(welcomeLabel);
+
+        //set Login information
+        JLabel infoLabel = new JLabel("Please Log in using your personal information below:");
+        infoLabel.setSize(500,200);
+        infoLabel.setLocation(15,70);
+        infoLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 15));
+        container.add(infoLabel);
+
+
         //设置输入框布局
         JPanel textPanel = new JPanel();
         textPanel.setSize(450, 250);
-        textPanel.setLocation(10, 60);
+        textPanel.setLocation(10, 160);
         textPanel.setLayout(null);
         container.add(textPanel);
         //username文字布局
-        JLabel usernameLabel = new JLabel("Username:");
+        Image userIDImg = IOUtil.gainImage("src/main/resources/Icon/userID.jpg");
+        ImageIcon userIDIcon = new ImageIcon(userIDImg);
+        JLabel usernameLabel = new JLabel("Username:",userIDIcon,JLabel.LEFT);
         usernameLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         usernameLabel.setSize(200, 20);
         usernameLabel.setLocation(50, 50);
@@ -50,7 +81,9 @@ public class LoginFrame extends JFrame {
         textPanel.add(usernameField);
 
         //password文字布局
-        JLabel passwordLabel = new JLabel("Password:");
+        Image passwordImg = IOUtil.gainImage("src/main/resources/Icon/password.jpg");
+        ImageIcon passwordIcon = new ImageIcon(passwordImg);
+        JLabel passwordLabel = new JLabel("Password:",passwordIcon,JLabel.LEFT);
         passwordLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         passwordLabel.setSize(200, 20);
         passwordLabel.setLocation(50, 140);
@@ -68,7 +101,7 @@ public class LoginFrame extends JFrame {
         //设置button布局
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450, 200);
-        buttonPanel.setLocation(10, 300);
+        buttonPanel.setLocation(10, 400);
         buttonPanel.setLayout(null);
         container.add(buttonPanel);
         loginButton = new JButton("Login");
