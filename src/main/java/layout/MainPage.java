@@ -67,7 +67,24 @@ public class MainPage extends JPanel {
 
     public MainPage() {
         System.out.println("[log] Create MainFrame .......");
-        this.vRBox.add(Box.createVerticalStrut(70));
+        this.setLayout(null);
+
+        //Set JLabel
+        JLabel tittle = new JLabel(" Subject list");
+        Image image = IOUtil.gainImage("src/main/resources/Icon/rankListIcon.png");
+        if (image != null) {
+            tittle.setIcon(new ImageIcon(image));
+        }
+        tittle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        tittle.setBounds(400, 50, 200, 50);
+        this.add(tittle);
+
+        //Init JTable and JScrollPane
+        refresh();
+        this.jScrollPane.setBounds(200, 100, 400, 200);
+        this.add(this.jScrollPane);
+
+        /*this.vRBox.add(Box.createVerticalStrut(70));
 
         //Set JLabel
         JLabel tittle = new JLabel(" Subject list");
@@ -82,8 +99,8 @@ public class MainPage extends JPanel {
 
         //personalImage.setImageIcon(new ImageIcon());
         this.vLBox.add(personalImage);
-        /*Border border = BorderFactory.createLineBorder(Color.RED, 2);
-        jPanel.setBorder(border);*/
+        *//*Border border = BorderFactory.createLineBorder(Color.RED, 2);
+        jPanel.setBorder(border);*//*
         this.vRBox.add(Box.createVerticalStrut(10));
 
         //set GPA and rank
@@ -116,7 +133,7 @@ public class MainPage extends JPanel {
         this.splitPane.setDividerSize(0);
         this.splitPane.setEnabled(false);
         this.splitPane.setBorder(null);
-        this.add(this.splitPane);
+        this.add(this.splitPane);*/
         System.out.println("[log] Create MainFrame : successful");
     }
 
