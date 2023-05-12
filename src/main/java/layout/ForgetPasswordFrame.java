@@ -2,6 +2,7 @@ package layout;
 
 import entity.Student;
 import util.DataUtil;
+import util.IOUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,15 +32,35 @@ public class ForgetPasswordFrame extends JFrame {
         this.setBackground(Color.WHITE);
         container.setLayout(null);
 
+        Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
+        JLabel buptImgLable = new JLabel(new ImageIcon(buptImage));
+        buptImgLable.setLocation(10,10);
+        buptImgLable.setSize(51,48);
+        container.add(buptImgLable);
+
+        Image QMULImage = IOUtil.gainImage("src/main/resources/Icon/QMUL.png");
+        JLabel QMULImgLable = new JLabel(new ImageIcon(QMULImage));
+        QMULImgLable.setLocation(240,10);
+        QMULImgLable.setSize(190,48);
+        container.add(QMULImgLable);
+
+        JLabel welcomeLabel = new JLabel("<html>Using your phone number to reset your password</html>");
+        welcomeLabel.setSize(500,100);
+        welcomeLabel.setLocation(12,50);
+        welcomeLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 25));
+        container.add(welcomeLabel);
+
         //set input Panel
         JPanel inputPanel = new JPanel();
-        inputPanel.setSize(450, 320);
-        inputPanel.setLocation(10, 30);
+        inputPanel.setSize(450, 360);
+        inputPanel.setLocation(10, 100);
         inputPanel.setLayout(null);
         container.add(inputPanel);
 
         //set userName text label
-        JLabel userNameLabel = new JLabel("Username:");
+        Image userIDImg = IOUtil.gainImage("src/main/resources/Icon/userID.jpg");
+        ImageIcon userIDIcon = new ImageIcon(userIDImg);
+        JLabel userNameLabel = new JLabel("Username:",userIDIcon,JLabel.LEFT);
         userNameLabel.setSize(200, 20);
         userNameLabel.setFont(new Font("Comic sans Ms", Font.BOLD, 20));
         userNameLabel.setLocation(50, 50);
@@ -53,9 +74,11 @@ public class ForgetPasswordFrame extends JFrame {
         inputPanel.add(userNameField);
 
         //set password text label
-        JLabel passwordLabel = new JLabel("Set new password:");
+        Image passwordImg = IOUtil.gainImage("src/main/resources/Icon/password.jpg");
+        ImageIcon passwordIcon = new ImageIcon(passwordImg);
+        JLabel passwordLabel = new JLabel("Set new password:",passwordIcon,JLabel.LEFT);
         passwordLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
-        passwordLabel.setSize(200, 20);
+        passwordLabel.setSize(300, 20);
         passwordLabel.setLocation(50, 140);
         inputPanel.add(passwordLabel);
 
@@ -67,7 +90,9 @@ public class ForgetPasswordFrame extends JFrame {
         inputPanel.add(newPasswordField);
 
         //set phone number text label
-        JLabel phoneLabel = new JLabel("Phone number:");
+        Image phoneImg = IOUtil.gainImage("src/main/resources/Icon/phone.jpg");
+        ImageIcon phoneIcon = new ImageIcon(phoneImg);
+        JLabel phoneLabel = new JLabel("Phone number:",phoneIcon,JLabel.LEFT);
         phoneLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         phoneLabel.setSize(200, 20);
         phoneLabel.setLocation(50, 230);
@@ -80,10 +105,19 @@ public class ForgetPasswordFrame extends JFrame {
         phoneNumberFiled.setLocation(50, 265);
         inputPanel.add(phoneNumberFiled);
 
+        JLabel infoLabel = new JLabel("<html>Your password should contains at least one <br>UPPERCASE letter,one LOWER case " +
+                "letter and a DIGITAl</html>");
+        infoLabel.setSize(350,45);
+        infoLabel.setLocation(35,315);
+        infoLabel.setFont(new Font("Comic Sans Ms", Font.BOLD, 12));
+        infoLabel.setBackground(Color.YELLOW);
+        infoLabel.setOpaque(true);
+        inputPanel.add(infoLabel);
+
         //set button panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450, 200);
-        buttonPanel.setLocation(10, 335);
+        buttonPanel.setLocation(10, 435);
         buttonPanel.setLayout(null);
         container.add(buttonPanel);
 
@@ -98,9 +132,9 @@ public class ForgetPasswordFrame extends JFrame {
 
         //set back button
         backButton = new JButton("Back");
-        backButton.setFont(new Font("Comic Sans Ms", Font.BOLD, 15));
-        backButton.setSize(80, 30);
-        backButton.setLocation(40, 150);
+        backButton.setFont(new Font("Comic Sans Ms", Font.BOLD, 13));
+        backButton.setSize(70, 30);
+        backButton.setLocation(20, 90);
         backButton.setBackground(Color.white);
         buttonPanel.add(backButton);
         backButton.addActionListener(new BackListener());
