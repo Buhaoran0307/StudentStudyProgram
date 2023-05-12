@@ -16,5 +16,10 @@ public class TestProgram {
         //JsonFileReader.readJson();
         //MainFrame.localUser = ConstantParameters.studentMap.get(2020002);
         //new MainFrame();
+//        try {
+//            IOUtil.writeGradePDF(2020001);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
