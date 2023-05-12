@@ -13,11 +13,11 @@ public class DataUtil {
 
     /**
      * this method is used to check whether input phone number is 8 numbers integer.
+     *
      * @param input input phone number
      * @return valid phone number or not
      */
-    public static boolean checkPhoneNumber(String input)
-    {
+    public static boolean checkPhoneNumber(String input) {
         String regex = "\\d{8}";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input).matches();
@@ -26,54 +26,55 @@ public class DataUtil {
     /**
      * this method check password
      * whether it contains at least one uppercase letter, one lowercase letter, and one digit, and no other symbols
+     *
      * @param input input password
      * @return valid password or not
      */
-    public static boolean checkPassword(String input)
-    {
+    public static boolean checkPassword(String input) {
         String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]+$";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input).matches();
     }
 
-    public static float calculateGPA(Student student){
+    public static float calculateGPA(Student student) {
         ArrayList<Subject> selectSubject = student.getSelectedSubjects();
-        if (selectSubject == null){
+        if (selectSubject == null) {
             return 0;
         }
-        if(selectSubject.size() == 0){
+        if (selectSubject.size() == 0) {
             return 0;
         }
         float totalMarks = 0;
         float totalCredit = 0;
         float credit;
-        for (Subject subject : selectSubject){
+        for (Subject subject : selectSubject) {
             credit = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo()).getCredit();
             totalCredit += credit;
-            if (subject.getGrade() >= 60){
-                totalMarks += credit*subject.getGrade();
+            if (subject.getGrade() >= 60) {
+                totalMarks += credit * subject.getGrade();
             }
         }
-        return totalMarks/totalCredit;
+        return totalMarks / totalCredit;
     }
 
-    public static int calculateGPARank(float GPA){
+    public static int calculateGPARank(float GPA) {
         Student student;
         int rank = 1;
         Set<Integer> studentKey = ConstantParameters.studentMap.keySet();
         Iterator<Integer> studentIterator = studentKey.iterator();
-        while (true){
-            if(studentIterator.hasNext()){
+        while (true) {
+            if (studentIterator.hasNext()) {
                 student = ConstantParameters.studentMap.get(studentIterator.next());
-                if (GPA < calculateGPA(student)){
-                    rank ++;
+                if (GPA < calculateGPA(student)) {
+                    rank++;
                 }
-            }else {
+            } else {
                 break;
             }
         }
         return rank;
     }
+
 }
 
 
