@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
         FRAME_X = 400;
         FRAME_Y = 100;
         FRAME_HEIGHT = 480;
-        FRAME_WIDTH = 600;
+        FRAME_WIDTH = 700;
     }
 
     {
@@ -69,6 +69,7 @@ public class MainFrame extends JFrame {
         this.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(false);
         //this.setAlwaysOnTop(true);
     }
 }

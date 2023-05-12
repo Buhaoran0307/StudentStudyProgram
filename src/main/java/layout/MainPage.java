@@ -35,12 +35,19 @@ public class MainPage extends JPanel {
     private final boolean[] sortOfColumns;
     private final JLabel GPA;
     private final JLabel rank;
+    private final JLabel welcome;
+    private final JLabel name;
     public JScrollPane jScrollPane;
     public JButton refresh;
+    public JButton top;
+    public JButton select;
+    public JButton schedule;
     /**
      * This Box object contains every component.
      */
-    public Box vBox;
+    private final Box vRBox;
+    private final Box vLBox;
+    public JSplitPane splitPane;
     private MainFrame mainFrame;
     private JTable subjectTable;
     private HashMap<String, Object> subjectMap;
@@ -50,71 +57,85 @@ public class MainPage extends JPanel {
      */ {
         Image image = IOUtil.gainImage("src/main/resources/Icon/defaultUserIcon.png");
         this.personalImage = new ImagePanel(image);
-        this.refresh = new JButton(" refresh ");
+        this.refresh = new JButton("refresh");
         this.refresh.addActionListener(e -> refresh());
         this.GPA = new JLabel();
         this.rank = new JLabel();
+        this.top = new JButton();
+        this.name = new JLabel();
+        this.select = new JButton("Course selection");
+        this.schedule = new JButton("Curriculum schedule");
+        this.welcome = new JLabel("Welcome to our system!");
+        top.setLayout(new FlowLayout());
         this.sortOfColumns = new boolean[this.columnNames.length];
-        for (int i =0; i<columnNames.length; i++){
+        for (int i = 0; i < columnNames.length; i++) {
             sortOfColumns[i] = true;
         }
         this.jScrollPane = new JScrollPane();
-        this.vBox = Box.createVerticalBox();
+        this.vRBox = Box.createVerticalBox();
+        this.vLBox = Box.createVerticalBox();
     }
 
     public MainPage() {
         System.out.println("[log] Create MainFrame .......");
-        this.vBox.add(Box.createVerticalStrut(70));
-
-        //set person image
-        JPanel jPanel = new JPanel();
-        jPanel.setLayout(new BorderLayout());
+        this.setLayout(null);
 
         //Set JLabel
-        JLabel tittle = new JLabel(" Subject list");
+        JLabel title = new JLabel(" Subject list");
         Image image = IOUtil.gainImage("src/main/resources/Icon/rankListIcon.png");
         if (image != null) {
-            tittle.setIcon(new ImageIcon(image));
+            title.setIcon(new ImageIcon(image));
         }
-        tittle.setFont(new Font(Font.SERIF, Font.BOLD, 20));
-        tittle.setHorizontalAlignment(SwingConstants.CENTER);
-        //set person picture
-        //personalImage.setImageIcon(new ImageIcon());
-        jPanel.add(personalImage, BorderLayout.WEST);
-        jPanel.add(tittle, BorderLayout.CENTER);
-        jPanel.setPreferredSize(new Dimension(450, jPanel.getPreferredSize().height));
-        /*Border border = BorderFactory.createLineBorder(Color.RED, 2);
-        jPanel.setBorder(border);*/
-        this.vBox.add(jPanel);
-        this.vBox.add(Box.createVerticalStrut(10));
-
-        //set GPA and rank
-        Box hBox1 = Box.createHorizontalBox();
-        hBox1.add(this.GPA);
-        hBox1.add(Box.createHorizontalStrut(50));
-        hBox1.add(this.rank);
-        this.vBox.add(hBox1);
-        this.vBox.add(Box.createVerticalStrut(5));
+        title.setFont(new Font(Font.SERIF, Font.BOLD, 20));
+        title.setBounds(345, 80, 200, 50);
+        this.add(title);
 
         //Init JTable and JScrollPane
         refresh();
-        this.vBox.add(this.jScrollPane);
-        this.vBox.add(Box.createVerticalStrut(10));
+        this.jScrollPane.setBounds(190, 150, 480, 200);
+        this.add(this.jScrollPane);
 
-        //Set JButton
+        //set GPA and rank
+        top.setBounds(325,40,200,30);
+        top.setBackground(new Color(242, 242, 242));
+        top.setBorder(BorderFactory.createLoweredBevelBorder());
+        this.GPA.setFont(new Font(Font.SERIF, Font.PLAIN , 14));
+        top.add(GPA);
+        this.rank.setFont(new Font(Font.SERIF, Font.PLAIN , 14));
+        top.add(rank);
+        this.add(top);
+
+        //set person picture
+        personalImage.setImageIcon(new ImageIcon());
+        personalImage.setBounds(60,70,60,60);
+        this.add(personalImage);
+        name.setBounds(45,110,150,50);
+        name.setFont(new Font(Font.MONOSPACED, Font.BOLD , 12));
+        welcome.setBounds(18,130,250,50);
+        welcome.setFont(new Font(Font.MONOSPACED, Font.PLAIN , 12));
+        this.add(name);
+        this.add(welcome);
+
+        //Set refresh Button
         Image image1 = IOUtil.gainImage("src/main/resources/Icon/refresh.png");
         if (image1 != null) {
             this.refresh.setIcon(new ImageIcon(image1));
         }
-        this.vBox.add(this.refresh);
-        this.refresh.setAlignmentX(CENTER_ALIGNMENT);
+        this.refresh.setBounds(300,380,100,30);
+        this.add(refresh);
         this.refresh.addActionListener(e -> {
             refresh();
             JOptionPane.showConfirmDialog(mainFrame, "Refresh successfully !", "Confirmation", JOptionPane.DEFAULT_OPTION);
         });
-        this.add(this.vBox);
 
-        this.add(this.vBox);
+        //Select and Schedule button
+        this.select.setBounds(20,250,150,30);
+        this.schedule.setBounds(20,300,150,30);
+        this.select.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        this.schedule.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        this.add(select);
+        this.add(schedule);
+
         System.out.println("[log] Create MainFrame : successful");
     }
 
@@ -128,8 +149,9 @@ public class MainPage extends JPanel {
         if (MainFrame.localUser.getSelectedSubjects() == null) {
             MainFrame.localUser.setSelectedSubjects(new ArrayList<>());
         }
-        this.GPA.setText("GPA : " + DataUtil.calculateGPA(MainFrame.localUser));
+        this.GPA.setText("GPA : " + DataUtil.calculateGPA(MainFrame.localUser) + "      ");
         this.rank.setText("Rank : " + DataUtil.calculateGPARank(DataUtil.calculateGPA(MainFrame.localUser)));
+        this.name.setText("Hello, " + MainFrame.localUser.getName() + "!");
 
         ArrayList<Subject> selectedSubjects = MainFrame.localUser.getSelectedSubjects();
         Object[][] data;
@@ -180,12 +202,17 @@ public class MainPage extends JPanel {
                 String selectColumn = (String) colModel.getColumn(index).getHeaderValue();
                 sortOfColumns[index] = !sortOfColumns[index];
                 refresh(selectColumn, sortOfColumns[index]);
-                System.out.println("[log] select column \""+columnNames[index]+"\"");
+                System.out.println("[log] select column \"" + columnNames[index] + "\"");
             }
         });
+
         //Put JTable into jScrollPane
         this.jScrollPane.setViewportView(this.subjectTable);
         this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
+        int tableHeight = subjectTable.getRowHeight() * subjectTable.getRowCount();
+        if (tableHeight > 200) {
+            tableHeight = 200;
+        }
         this.jScrollPane.setPreferredSize(new Dimension(450, 200));
     }
 
@@ -197,8 +224,6 @@ public class MainPage extends JPanel {
         this.mainFrame = mainFrame;
     }
 }
-
-
 class unEditionTable extends DefaultTableModel {
     public unEditionTable(Object[][] data, Object[] columnNames) {
         super(data, columnNames);
