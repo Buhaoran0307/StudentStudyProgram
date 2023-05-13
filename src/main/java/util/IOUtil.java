@@ -6,17 +6,22 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import entity.Subject;
 import com.itextpdf.text.pdf.PdfWriter;
 import entity.Student;
 import entity.SubjectInfo;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Paragraph;
+
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.Image;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -70,6 +75,11 @@ public class IOUtil {
         }
     }
 
+    /**
+     * this method is used to write the student's grade into specific PDF document
+     * @param studentNo the student's ID who want to write out his grade
+     * @throws Exception IOException
+     */
     public static void writeGradePDF(int studentNo) throws Exception{
         Student currentStudent = ConstantParameters.studentMap.get(studentNo);
         String filePath = "src/main/resources/gradePDF/"+studentNo+"-grade.pdf";
@@ -123,4 +133,116 @@ public class IOUtil {
 
         document.close();
     }
+
+    /**
+     * this method is used to write the student's GPA certification into specific PDF document
+     * @param studentNo the student's ID who want to write out his GPA
+     * @throws Exception IOException
+     */
+    public static void  writeGPAPDF(int studentNo) throws Exception {
+        Student currentStudent = ConstantParameters.studentMap.get(studentNo);
+        String filePath = "src/main/resources/GPAPDF/"+studentNo+"-GPA.pdf";
+        File outputFile = new File(filePath);
+
+        if (!outputFile.exists()) {
+            outputFile.createNewFile();
+        }
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+        document.open();
+
+        Font boldFontTitle = new Font(Font.FontFamily.TIMES_ROMAN, 25, Font.BOLD,BaseColor.RED);
+        Chunk chunk = new Chunk("BUPT Academic affairs office", boldFontTitle);
+        chunk.setUnderline(0.1f, -2f);
+        Paragraph paragraphTitle = new Paragraph(chunk);
+        paragraphTitle.setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraphTitle);
+
+        Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
+        Paragraph paragraphInfo = new Paragraph("GPA Certification", boldFont);
+        paragraphInfo.setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraphInfo);
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("\n"));
+        LocalDate today = LocalDate.now();
+        float GPA = DataUtil.calculateGPA(currentStudent);
+        int rank = DataUtil.calculateGPARank(GPA);
+        Paragraph paragraph1 = new Paragraph();
+        Chunk chunk1 = new Chunk("This is to certify that ");
+        Chunk chunk2 = new Chunk(currentStudent.getName());
+        chunk2.setFont(FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+        chunk2.setUnderline(0.1f, -2f);
+        Chunk chunk3 = new Chunk(" was admitted into the full-time undergraduate program in the International School, Beijing University of Posts and Telecommunications, in Sep. 2020. By the end of ");
+        Chunk chunk4 = new Chunk(today.toString());
+        Chunk chunk5 = new Chunk(", the student’s GPA is ");
+        Chunk chunk6 = new Chunk(String.valueOf(GPA));
+        chunk6.setUnderline(0.1f, -2f);
+        chunk6.setFont(FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+        Chunk chunk7 = new Chunk(" and ranks ");
+        Chunk chunk8 = new Chunk(String.valueOf(rank));
+        chunk8.setUnderline(0.1f, -2f);
+        chunk8.setFont(FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
+        Chunk chunk9 = new Chunk(" among a total of ");
+        Chunk chunk10 = new Chunk(String.valueOf(ConstantParameters.studentMap.size()));
+        Chunk chunk11 = new Chunk(" students in the major.");
+
+        paragraph1.add(chunk1);
+        paragraph1.add(chunk2);
+        paragraph1.add(chunk3);
+        paragraph1.add(chunk4);
+        paragraph1.add(chunk5);
+        paragraph1.add(chunk6);
+        paragraph1.add(chunk7);
+        paragraph1.add(chunk8);
+        paragraph1.add(chunk9);
+        paragraph1.add(chunk10);
+        paragraph1.add(chunk11);
+
+        paragraph1.setAlignment(Element.ALIGN_LEFT);
+        document.add(paragraph1);
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("\n"));
+
+        Paragraph paragraphCal = new Paragraph();
+
+        paragraphCal.add("NOTE: ");
+        paragraphCal.add(new Chunk("GPA = ", FontFactory.getFont(FontFactory.HELVETICA, 12, Font.BOLD)));
+        paragraphCal.add(new Chunk("SUM (Grade × Credits)/SUM (Credits)\n", FontFactory.getFont(FontFactory.HELVETICA, 12)));
+
+        document.add(paragraphCal);
+
+
+
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph("\n"));
+
+        //set the information lines
+        Paragraph paragraphEmail = new Paragraph();
+
+        // Add each line of text as a separate Chunk to the Paragraph
+        paragraphEmail.add(new Chunk("Academic Affairs Office of BUPT"));
+        paragraphEmail.add(Chunk.NEWLINE); // add a new line
+        paragraphEmail.add(new Chunk("10 Xitucheng Road, Haidian District"));
+        paragraphEmail.add(Chunk.NEWLINE);
+        paragraphEmail.add(new Chunk("Beijing, 100876. P. R. China"));
+        paragraphEmail.add(Chunk.NEWLINE);
+        paragraphEmail.add(new Chunk("Tel: 010-101010"));
+        paragraphEmail.add(Chunk.NEWLINE);
+        paragraphEmail.add(new Chunk("Email: test@bupt.edu.cn"));
+
+        // Set the alignment of the Paragraph to right-aligned
+        paragraphEmail.setAlignment(Element.ALIGN_RIGHT);
+
+        // Set the position of the Paragraph to the bottom of the page
+        paragraphEmail.setSpacingBefore(30); // adjust this value to position the paragraph as needed
+
+        // Add the Paragraph to the document
+        document.add(paragraphEmail);
+
+        document.close();
+
+    }
+
 }
