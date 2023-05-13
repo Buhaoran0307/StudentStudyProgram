@@ -3,95 +3,94 @@ package layout;
 import ConstantPacket.ConstantParameters;
 import entity.Subject;
 import entity.SubjectInfo;
+import util.IOUtil;
 import util.LayoutUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SubjectPage extends JPanel {
-    /**
-     * This Box object contains every component.
-     */
-    public Box vBox1;
-    public Box vBox2;
-    public Box vBox;
-    public Box hBox;
     public JButton back;
     public Subject subject;
     public SubjectInfo subjectInfo;
+    public Map<String,String> subjectHelper;
 
     {
         this.back = new JButton(" back ");
-        this.vBox1 = Box.createVerticalBox();
-        this.vBox2 = Box.createVerticalBox();
-        this.vBox = Box.createVerticalBox();
-        this.hBox = Box.createHorizontalBox();
+        this.subjectHelper = IOUtil.readSubjectHelper();
     }
 
     public SubjectPage(Subject subject){
+        this.setLayout(null);
+        this.setBounds(0,0,MainFrame.FRAME_WIDTH,MainFrame.FRAME_HEIGHT);
         this.subject = subject;
         this.subjectInfo = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo());
         System.out.println("Create SubjectPage...");
-        this.vBox.add(Box.createVerticalStrut(50));
+
         JLabel subjectLabel = new JLabel(subjectInfo.getSubjectName());
-        subjectLabel.setFont(new Font(Font.SERIF,Font.BOLD,20));
-        subjectLabel.setAlignmentX(CENTER_ALIGNMENT);
-        this.vBox.add(subjectLabel);
-        this.vBox.add(Box.createVerticalStrut(30));
+        subjectLabel.setFont(new Font("Comic Sans Ms",Font.PLAIN, 30));
+        int labelWidth = subjectLabel.getPreferredSize().width;
+        int labelHeight = subjectLabel.getPreferredSize().height;
+        subjectLabel.setBounds((MainFrame.FRAME_WIDTH-labelWidth)/2,40,250,labelHeight);
+        this.add(subjectLabel);
 
-        JLabel jID1 = new JLabel("Subject ID");
-        JLabel jGrade1 = new JLabel("Grade");
-        JLabel jCharacter1 = new JLabel("Character");
-        JLabel jCredit1 = new JLabel("Credit");
-        JLabel jStartTime1 = new JLabel("Start Time");
-        JLabel jRank1 = new JLabel("Rank");
-        this.vBox1.add(jID1);
-        this.vBox1.add(jGrade1);
-        this.vBox1.add(jCharacter1);
-        this.vBox1.add(jCredit1);
-        this.vBox1.add(jStartTime1);
-        this.vBox1.add(jRank1);
+        int lx = 255;
+        int y = 90;
+        int space = 20;
+        JLabel jCharacter1 = new JLabel("Character  :");
+        JLabel jStartTime1 = new JLabel("Start Time :");
+        jCharacter1.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
+        jStartTime1.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
+        jCharacter1.setBounds(lx,y,100,20);
+        jStartTime1.setBounds(lx,y+space,100,20);
+        this.add(jCharacter1);
+        this.add(jStartTime1);
 
+        int rx = lx + 110;
         HashMap<String,String> mapSubjectInfo = LayoutUtil.getMapSubjectInfo(subject);
-        String subjectNo = mapSubjectInfo.get("ID");
-        String grade = mapSubjectInfo.get("Grade");
         String character = mapSubjectInfo.get("Character");
-        String credit = mapSubjectInfo.get("Credit");
         String startTime = mapSubjectInfo.get("Start Time");
-        String rank = mapSubjectInfo.get("Rank");
-
-        /*System.out.println(subjectNo);
-        System.out.println(grade);
-        System.out.println(character);
-        System.out.println(credit);
-        System.out.println(startTime);
-        System.out.println(rank);*/
-
-
-        JLabel jID2 = new JLabel(subjectNo);
-        JLabel jGrade2 = new JLabel(grade);
         JLabel jCharacter2 = new JLabel(character);
-        JLabel jCredit2 = new JLabel(credit);
         JLabel jStartTime2 = new JLabel(startTime);
-        JLabel jRank2 = new JLabel(rank);
-        this.vBox2.add(jID2);
-        this.vBox2.add(jGrade2);
-        this.vBox2.add(jCharacter2);
-        this.vBox2.add(jCredit2);
-        this.vBox2.add(jStartTime2);
-        this.vBox2.add(jRank2);
+        jCharacter2.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
+        jStartTime2.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
+        jCharacter2.setBounds(rx,y,100,20);
+        jStartTime2.setBounds(rx,y+space,100,20);
+        this.add(jCharacter2);
+        this.add(jStartTime2);
 
-        this.hBox.add(vBox1);
-        this.hBox.add(Box.createHorizontalStrut(20));
-        this.hBox.add(vBox2);
-        this.vBox.add(hBox);
-        this.vBox.add(Box.createVerticalStrut(30));
-        this.vBox.add(this.back);
-        this.back.setAlignmentX(CENTER_ALIGNMENT);
+        String key = getSubjectKey(subject.getSubjectNo());
+        String text = subjectHelper.get(key);
+        JTextArea textArea = new JTextArea(text);
+        textArea.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
+        textArea.setBounds(0,0,400,200);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(155,150,400,200);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.add(scrollPane);
+
+        this.back.setBounds(300,370,100,30);
+        this.back.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
         this.back.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.cards,"MainPage"));
-        this.add(this.vBox);
+        this.add(back);
         System.out.println("Create SubjectPage : [successful]");
+    }
+
+    private String getSubjectKey(int subjectNo) {
+        switch (subjectNo){
+            case 1:
+                return "Java Development";
+            case 2:
+                return "Data Structures";
+            case 3:
+                return "AI";
+            default:
+                return "";
+        }
     }
 
 }
