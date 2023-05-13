@@ -40,8 +40,8 @@ public class MainPage extends JPanel {
     public JScrollPane jScrollPane;
     public JButton refresh;
     public JButton top;
-    public JButton select;
-    public JButton schedule;
+    public JButton outputGPA;
+    public JButton outputGrade;
     private MainFrame mainFrame;
     private JTable subjectTable;
     private HashMap<String, Object> subjectMap;
@@ -57,8 +57,8 @@ public class MainPage extends JPanel {
         this.rank = new JLabel();
         this.top = new JButton();
         this.name = new JLabel();
-        this.select = new JButton("Course selection");
-        this.schedule = new JButton("Curriculum schedule");
+        this.outputGPA = new JButton("GPA certification");
+        this.outputGrade = new JButton("Trusted Transcript");
         this.welcome = new JLabel("Welcome to our system!");
         top.setLayout(new FlowLayout());
         this.sortOfColumns = new boolean[this.columnNames.length];
@@ -121,12 +121,28 @@ public class MainPage extends JPanel {
         });
 
         //Select and Schedule button
-        this.select.setBounds(20,250,150,30);
-        this.schedule.setBounds(20,300,150,30);
-        this.select.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-        this.schedule.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-        this.add(select);
-        this.add(schedule);
+        this.outputGPA.setBounds(20,250,150,30);
+        this.outputGrade.setBounds(20,300,150,30);
+        this.outputGPA.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        this.outputGPA.addActionListener(e -> {
+            try {
+                IOUtil.writeGPAPDF(MainFrame.localUser.getStudentNo());
+                JOptionPane.showMessageDialog(mainFrame, "Print your GPA certification successfully !");
+            } catch (Exception ignored) {
+                JOptionPane.showMessageDialog(mainFrame, "Printer is not available now, please try later.", "Warming", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        this.outputGrade.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        this.outputGrade.addActionListener(e -> {
+            try {
+                IOUtil.writeGradePDF(MainFrame.localUser.getStudentNo());
+                JOptionPane.showMessageDialog(mainFrame, "Print your Trusted Transcript successfully !");
+            } catch (Exception ignored) {
+                JOptionPane.showMessageDialog(mainFrame, "Printer is not available now, please try later.", "Warming", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+        this.add(outputGPA);
+        this.add(outputGrade);
 
         System.out.println("[log] Create MainFrame : successful");
     }
@@ -252,8 +268,6 @@ class ImagePanel extends JPanel implements ActionListener {
         // 处理按钮的点击事件
         if (e.getSource() == imageButton) {
             MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
-            //mainFrame.setVisible(false);
-            //new PersonalFrame(mainFrame);
         }
     }
 
