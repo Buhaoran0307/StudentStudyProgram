@@ -9,14 +9,12 @@ import java.awt.*;
 
 public class PersonalPage extends JPanel{
     private final ImagePanel personalImage;
-    private final MainFrame mainFrame;
     {
         Image image = IOUtil.gainImage("src/main/resources/Icon/defaultUserIcon.png");
         personalImage = new ImagePanel(image);
     }
     public PersonalPage(MainFrame mainFrame){
         this.setLayout(null);
-        this.mainFrame = mainFrame;
         JPanel LPanel = new JPanel();
         LPanel.setLayout(null);
         personalImage.setImageIcon(new ImageIcon());
@@ -213,9 +211,6 @@ class InfoJPanel extends JPanel {
         return label;
     }
     public String getContext(){return context;}
-    public JLabel getContextL() {
-        return contextL;
-    }
 }
 
 class MyDialog extends JDialog {
@@ -259,9 +254,7 @@ class MyDialog extends JDialog {
 
         total.add(p1);
 
-        //密码，多出的第二行
-        TextField contextL2 = new TextField();
-        JPasswordField passwordField2=new JPasswordField();;
+        JPasswordField passwordField2=new JPasswordField();
         if (infoJPanel.getLabel().equals("password")) {
             JPanel p3 = new JPanel();
 
@@ -341,9 +334,7 @@ class ButtonPanel extends JPanel {
         this.add(back);
         this.add(logOut);
         //监听器
-        back.addActionListener(e -> {
-            MainFrame.cardLayout.show(MainFrame.cards,"MainPage");
-        });
+        back.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.cards,"MainPage"));
         //监听器
         logOut.addActionListener(e ->{
             new LoginFrame();

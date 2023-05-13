@@ -208,10 +208,6 @@ public class MainPage extends JPanel {
         this.jScrollPane.setPreferredSize(new Dimension(450, 200));
     }
 
-    public MainFrame getMainFrame() {
-        return mainFrame;
-    }
-
     public void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
@@ -261,16 +257,8 @@ class ImagePanel extends JPanel implements ActionListener {
         }
     }
 
-    public ImageIcon getImageIcon() {
-        return imageIcon;
-    }
-
     public void setImageIcon(ImageIcon imageIcon) {
         this.imageIcon = imageIcon;
-    }
-
-    public MainFrame getMainFrame() {
-        return mainFrame;
     }
 
     public void setMainFrame(MainFrame mainFrame) {
