@@ -33,31 +33,35 @@ public class MainFrame extends JFrame {
      */
     public static JPanel cards;
     private final MainPage mainPage;
+    private final PersonalPage personalPage;
 
     static {
         FRAME_X = 400;
         FRAME_Y = 100;
-        FRAME_HEIGHT = 480;
-        FRAME_WIDTH = 600;
+        FRAME_HEIGHT = 490;
+        FRAME_WIDTH = 700;
     }
 
     {
         this.mainPage = new MainPage();
+        this.personalPage = new PersonalPage(this);
     }
 
     public MainFrame() {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
         this.initJPanel();
-        this.initActionSource(cardLayout);
+        this.initActionSource();
         this.initFrame();
     }
 
     private void initJPanel() {
         cards.add(this.mainPage, "MainPage");
+        cards.add(this.personalPage,"PersonalPage");
+        cardLayout.show(cards,"MainPage");
         this.add(cards);
     }
-    private void initActionSource(CardLayout cardLayout) {
+    private void initActionSource() {
         mainPage.setMainFrame(this);
         mainPage.personalImage.setMainFrame(this);
     }
@@ -69,6 +73,7 @@ public class MainFrame extends JFrame {
         this.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.setResizable(false);
         //this.setAlwaysOnTop(true);
     }
 }
