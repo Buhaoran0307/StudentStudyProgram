@@ -1,4 +1,5 @@
-import layout.LoginFrame;
+import ConstantPacket.ConstantParameters;
+import layout.MainFrame;
 import util.IOUtil;
 
 public class TestProgram {
@@ -9,17 +10,12 @@ public class TestProgram {
         //System.out.println(ConstantParameters.subjectInfoMap.get(1));
         //System.out.println(ConstantParameters.studentMap.get(2020001));
 
-        new LoginFrame();
+        //new LoginFrame();
         //new ForgetPasswordFrame();
         //new PersonalFrame();
         //new MainFrame();
         //JsonFileReader.readJson();
-        //MainFrame.localUser = ConstantParameters.studentMap.get(2020002);
-        //new MainFrame();
-//        try {
-//            IOUtil.writeGradePDF(2020001);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        MainFrame.localUser = ConstantParameters.studentMap.get(2020002);
+        new MainFrame();
     }
 }

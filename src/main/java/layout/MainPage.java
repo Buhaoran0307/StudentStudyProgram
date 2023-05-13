@@ -42,12 +42,6 @@ public class MainPage extends JPanel {
     public JButton top;
     public JButton select;
     public JButton schedule;
-    /**
-     * This Box object contains every component.
-     */
-    private final Box vRBox;
-    private final Box vLBox;
-    public JSplitPane splitPane;
     private MainFrame mainFrame;
     private JTable subjectTable;
     private HashMap<String, Object> subjectMap;
@@ -72,8 +66,6 @@ public class MainPage extends JPanel {
             sortOfColumns[i] = true;
         }
         this.jScrollPane = new JScrollPane();
-        this.vRBox = Box.createVerticalBox();
-        this.vLBox = Box.createVerticalBox();
     }
 
     public MainPage() {
@@ -99,20 +91,20 @@ public class MainPage extends JPanel {
         top.setBounds(325,40,200,30);
         top.setBackground(new Color(242, 242, 242));
         top.setBorder(BorderFactory.createLoweredBevelBorder());
-        this.GPA.setFont(new Font(Font.SERIF, Font.PLAIN , 14));
+        this.GPA.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
         top.add(GPA);
-        this.rank.setFont(new Font(Font.SERIF, Font.PLAIN , 14));
+        this.rank.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
         top.add(rank);
         this.add(top);
 
         //set person picture
         personalImage.setImageIcon(new ImageIcon());
-        personalImage.setBounds(60,70,60,60);
+        personalImage.setBounds(60,80,60,60);
         this.add(personalImage);
-        name.setBounds(45,110,150,50);
-        name.setFont(new Font(Font.MONOSPACED, Font.BOLD , 12));
-        welcome.setBounds(18,130,250,50);
-        welcome.setFont(new Font(Font.MONOSPACED, Font.PLAIN , 12));
+        name.setBounds(45,135,150,50);
+        name.setFont(new Font("Comic Sans Ms",Font.PLAIN, 16));
+        welcome.setBounds(18,165,250,50);
+        welcome.setFont(new Font("Comic Sans Ms",Font.PLAIN, 14));
         this.add(name);
         this.add(welcome);
 
@@ -263,8 +255,9 @@ class ImagePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // 处理按钮的点击事件
         if (e.getSource() == imageButton) {
-            mainFrame.setVisible(false);
-            new PersonalFrame(mainFrame);
+            MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
+            //mainFrame.setVisible(false);
+            //new PersonalFrame(mainFrame);
         }
     }
 
