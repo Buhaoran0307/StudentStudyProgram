@@ -245,4 +245,18 @@ public class IOUtil {
 
     }
 
+    public static Map<String,String> readSubjectHelper(){
+        Map<String,String> map = null;
+        Gson gson = new Gson();
+        String filePath = "src/main/java/DataSet/subjectHelper.json";
+
+        try {
+            JsonReader reader = new JsonReader(new FileReader(filePath));
+            map = gson.fromJson(reader, new TypeToken<Map<String, String>>(){}.getType());
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
 }
