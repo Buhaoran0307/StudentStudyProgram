@@ -9,7 +9,7 @@ Learning Journey app is a learning software for students from the International 
 jdk18
 maven
 
-The specific dependencies used in the program are contained in ***<u>pom.xml</u>***.
+The specific dependencies used in the program are contained in ***<u>pox.xml</u>***.
 
 
 ## Setting Up
