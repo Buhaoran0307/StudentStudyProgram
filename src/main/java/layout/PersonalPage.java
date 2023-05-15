@@ -337,7 +337,6 @@ class ButtonPanel extends JPanel {
         back.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.cards,"MainPage"));
         //监听器
         logOut.addActionListener(e ->{
-            new LoginFrame();
             MainFrame.localUser=null;
             mainFrame.dispose();
             new LoginFrame();
