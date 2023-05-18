@@ -42,6 +42,7 @@ public class MainPage extends JPanel {
     public JButton top;
     public JButton outputGPA;
     public JButton outputGrade;
+    public JButton checkAward;
     private MainFrame mainFrame;
     private JTable subjectTable;
     private HashMap<String, Object> subjectMap;
@@ -59,6 +60,7 @@ public class MainPage extends JPanel {
         this.name = new JLabel();
         this.outputGPA = new JButton("GPA certification");
         this.outputGrade = new JButton("Trusted Transcript");
+        this.checkAward=new JButton("Check Award");
         this.welcome = new JLabel("Welcome to our system!");
         top.setLayout(new FlowLayout());
         this.sortOfColumns = new boolean[this.columnNames.length];
@@ -120,6 +122,19 @@ public class MainPage extends JPanel {
             JOptionPane.showConfirmDialog(mainFrame, "Refresh successfully !", "Confirmation", JOptionPane.DEFAULT_OPTION);
         });
 
+
+        this.checkAward.setBounds(20,200,150,30);
+        this.checkAward.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        this.checkAward.addActionListener(e -> {
+
+                MainFrame.localUser.getStudentNo();
+            MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
+            AwardPage awardPage = new AwardPage(MainFrame.localUser.getStudentNo());
+            MainFrame.cards.add(awardPage, "awardPage");
+            MainFrame.cardLayout.show(MainFrame.cards, "awardPage");
+
+        });
+        this.add(checkAward);
         //Select and Schedule button
         this.outputGPA.setBounds(20,250,150,30);
         this.outputGrade.setBounds(20,300,150,30);
@@ -269,6 +284,7 @@ class ImagePanel extends JPanel implements ActionListener {
         if (e.getSource() == imageButton) {
             MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
         }
+
     }
 
     public void setImageIcon(ImageIcon imageIcon) {

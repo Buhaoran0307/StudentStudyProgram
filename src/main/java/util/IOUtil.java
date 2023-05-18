@@ -9,6 +9,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import entity.StudentAward;
 import entity.Subject;
 import com.itextpdf.text.pdf.PdfWriter;
 import entity.Student;
@@ -55,12 +56,27 @@ public class IOUtil {
             ConstantParameters.subjectInfoMap = gson.fromJson(reader, new TypeToken<Map<Integer, SubjectInfo>>(){}.getType());
             reader = new JsonReader(new FileReader(filePath1));
             ConstantParameters.studentMap = gson.fromJson(reader, new TypeToken<Map<Integer, Student>>(){}.getType());
+
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public static void readAwardHelper(){
+        Gson gson = new Gson();
+        String filePath = "src/main/java/DataSet/studentAward.json";
 
+        try {
+            JsonReader reader = new JsonReader(new FileReader(filePath));
+            ConstantParameters.studentAwardMap = gson.fromJson(reader, new TypeToken<Map<Integer, StudentAward>>(){}.getType());
+
+            reader.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     public static void writeStudentJson() {
         Gson gson = new Gson();
         String filePath = "src/main/java/DataSet/student.json";
@@ -259,4 +275,5 @@ public class IOUtil {
         }
         return map;
     }
+
 }
