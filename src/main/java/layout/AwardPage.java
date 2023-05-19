@@ -23,7 +23,7 @@ public class AwardPage extends JPanel {
         //System.out.println();
         System.out.println("Create AwardPage...");
 
-        JLabel studentLabel = new JLabel(ConstantParameters.studentMap.get(studentID).getName()+"'s Award and Achievement");
+        JLabel studentLabel = new JLabel(ConstantParameters.studentMap.get(studentID).getName()+"'s Award and Roles undertaken");
         studentLabel.setFont(new Font("Comic Sans Ms", Font.PLAIN, 30));
         int labelWidth = studentLabel.getPreferredSize().width;
         int labelHeight = studentLabel.getPreferredSize().height;
