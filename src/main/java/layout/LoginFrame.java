@@ -7,14 +7,38 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class LoginFrame extends JFrame {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
-    private JButton registerButton;
-    private JButton forgottenButton;
-    private JLabel buptImgLable;
+/**
+ *
+ */
 
+public class LoginFrame extends JFrame {
+    /**
+     * To enter user's username(student ID)
+     */
+    private JTextField usernameField;
+    /**
+     * TO enter the user's password
+     */
+    private JPasswordField passwordField;
+    /**
+     * The button which implement login operation when clicked
+     */
+    private JButton loginButton;
+    /**
+     * The button which implement register operation when clicked
+     */
+    private JButton registerButton;
+    /**
+     * The button which implement forget password operation when clicked
+     */
+    private JButton forgottenButton;
+    /**
+     * Used to enter the BUPT icons on the page.
+     */
+    private JLabel buptImgLable;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
 
     /**

@@ -13,13 +13,34 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class RegisterFrame extends JFrame{
+    /**
+     * To enter user's username(student ID)
+     */
     private JTextField name;
+    /**
+     * To enter user's nickname
+     */
     private JTextField nickname;
+    /**
+     * To enter user's phone No.
+     */
     private JTextField phone;
+    /**
+     * To enter user's password
+     */
     private JTextField password;
 
+    /**
+     * The button which implement Sign Up operation when clicked
+     */
     private JButton signUp;
+    /**
+     * The button which implement Go Back To Previous Pages operation when clicked
+     */
     private JButton goBack;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
 
     /**
