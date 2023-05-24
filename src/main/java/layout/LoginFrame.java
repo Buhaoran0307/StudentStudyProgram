@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
+ * This class is used to implement the login function of the system.
+ * The user can use valid personal information to register to the system.
  *
  */
 

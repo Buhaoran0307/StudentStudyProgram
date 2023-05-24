@@ -12,6 +12,12 @@ import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class is used to implement the register function of the system.
+ * The user can use valid personal information to register to the system.
+ *
+ */
+
 public class RegisterFrame extends JFrame{
     /**
      * To enter user's username(student ID)
