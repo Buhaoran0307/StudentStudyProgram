@@ -21,6 +21,10 @@ public class RegisterFrame extends JFrame{
     private JButton signUp;
     private JButton goBack;
     Container container = this.getContentPane();
+
+    /**
+     * Constructor for Register Page
+     */
     public RegisterFrame(){
 
         Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
@@ -153,6 +157,10 @@ public class RegisterFrame extends JFrame{
     }
 
 //    //button action  listener classes
+
+    /**
+     * Action Listener for sign up button
+     */
     class signUpListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -184,7 +192,7 @@ public class RegisterFrame extends JFrame{
             String nickName_from_text = nickname.getText();
             String password_from_text = password.getText();
 
-            //轮询给出学号
+            //Polling and gives out the student ID
             IOUtil.readJson();
             int temp_username=2020001;
             while(ConstantParameters.studentMap.get(temp_username)!=null){
@@ -194,7 +202,7 @@ public class RegisterFrame extends JFrame{
             ConstantParameters.studentMap.put(temp_username,student);
             System.out.println(ConstantParameters.studentMap.size());
 
-            //写回json
+            //write back to json
             Gson gson = new Gson();
             String studentJson = gson.toJson(ConstantParameters.studentMap);
             try {
@@ -210,7 +218,9 @@ public class RegisterFrame extends JFrame{
             new LoginFrame();
         }
     }
-
+    /**
+     * Action Listener for Go Back button
+     */
     class goBackListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             dispose();
@@ -218,7 +228,11 @@ public class RegisterFrame extends JFrame{
         }
     }
 
-//    //判断数字位数
+    /**
+     * To calculate the length of an integer
+     * @param number the number which is needed to calculate
+     * @return the length of the number.
+     */
     public int lenth(long number){
         int count = 0;
         while(number!=0){
