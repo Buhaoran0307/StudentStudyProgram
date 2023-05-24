@@ -7,12 +7,24 @@ import util.IOUtil;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class is used to generate personal information page
+ * @version 1.0
+ */
 public class PersonalPage extends JPanel{
+    /**
+     * Used to contain user's photo
+     */
     private final ImagePanel personalImage;
     {
         Image image = IOUtil.gainImage("src/main/resources/Icon/defaultUserIcon.png");
         personalImage = new ImagePanel(image);
     }
+
+    /**
+     * Create a personal page instance
+     * @param mainFrame the reference of the main JFrame instance
+     */
     public PersonalPage(MainFrame mainFrame){
         this.setLayout(null);
         JPanel LPanel = new JPanel();
@@ -163,11 +175,29 @@ public class PersonalPage extends JPanel{
     }
 }
 
+/**
+ * This JPanel is used to contain editable field which is used to change user's information
+ */
 class InfoJPanel extends JPanel {
+    /**
+     * The name of this JPanel instance
+     */
     private final String label;
+    /**
+     * The information to be shown
+     */
     private String context;
+    /**
+     * Use this JLabel to show the information on the screen
+     */
     private final JLabel contextL;
 
+    /**
+     * Create the instance
+     * @param tip the label of this JPanel
+     * @param context the String wanted to be shown
+     * @param isEditable whether this JPanel can be edited
+     */
     public InfoJPanel(String tip, String context, boolean isEditable) {
         this.setSize(315,50);
         this.setLayout(null);
@@ -203,16 +233,33 @@ class InfoJPanel extends JPanel {
         });
     }
 
+    /**
+     * refresh the information to be shown
+     * @param context the information
+     */
     public void refreshContext(String context){
         this.context = context;
         this.contextL.setText(this.context);
     }
+
+    /**
+     * Get the label of this JPanel
+     * @return the label
+     */
     public String getLabel() {
         return label;
     }
+
+    /**
+     * Get the information of this JPanel
+     * @return the context
+     */
     public String getContext(){return context;}
 }
 
+/**
+ * Use this JDialog to edit user's information
+ */
 class MyDialog extends JDialog {
     public MyDialog(InfoJPanel infoJPanel) {
         int User;
@@ -321,9 +368,23 @@ class MyDialog extends JDialog {
     }
 }
 
+/**
+ * Use this JPanel to implement the back and log out function
+ */
 class ButtonPanel extends JPanel {
+    /**
+     * use this button back to the main page
+     */
     JButton back = new JButton("back");
+    /**
+     * use this button to log put
+     */
     JButton logOut = new JButton("Log out");
+
+    /**
+     * Create the instance
+     * @param mainFrame the reference of the main JFrame instance
+     */
     public ButtonPanel(MainFrame mainFrame) {
         this.setLayout(null);
         this.setSize(195,30);

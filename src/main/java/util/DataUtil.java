@@ -36,6 +36,11 @@ public class DataUtil {
         return pattern.matcher(input).matches();
     }
 
+    /**
+     * this method is used to calculate the GPA of the student
+     * @param student the student wanted to be calculated
+     * @return the GPA
+     */
     public static float calculateGPA(Student student) {
         ArrayList<Subject> selectSubject = student.getSelectedSubjects();
         if (selectSubject == null) {
@@ -57,6 +62,11 @@ public class DataUtil {
         return totalMarks / totalCredit;
     }
 
+    /**
+     * this method is used to rank the GPA among all the students
+     * @param GPA the GPA marks
+     * @return the rank
+     */
     public static int calculateGPARank(float GPA) {
         Student student;
         int rank = 1;

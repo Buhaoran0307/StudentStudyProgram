@@ -8,7 +8,14 @@ import java.util.*;
 
 
 public class LayoutUtil {
-
+    /**
+     * Gain all subject information of one student
+     * @param selectedSubjects the selected subjects to be shown
+     * @param columnNames the names of the columns
+     * @param column sort by this column value
+     * @param isAscending the sort order
+     * @return the sorted subject information
+     */
     public static Object[][] getSubjectInfo(ArrayList<Subject> selectedSubjects, String[] columnNames, String column, boolean isAscending){
         Object[][] data;
         sortByColumn(selectedSubjects,column,isAscending);
@@ -40,6 +47,11 @@ public class LayoutUtil {
      * rank --> rank
      * startTime --> startTime
      */
+    /**
+     * get the subject info of the subject
+     * @param subject the subject wanted to be searched
+     * @return the map contain subject information
+     */
     public static HashMap<String, String> getMapSubjectInfo(Subject subject){
         HashMap<String,String> data = new HashMap<>();
         SubjectInfo subjectInfo = ConstantParameters.subjectInfoMap.get(subject.getSubjectNo());
@@ -53,6 +65,12 @@ public class LayoutUtil {
         return data;
     }
 
+    /**
+     * Sort the array list by the value of the object in it
+     * @param selectedSubjects the array list wanted to be sorted
+     * @param column the column selected to be sorted
+     * @param isAscending the sort order
+     */
     public static void sortByColumn(ArrayList<Subject> selectedSubjects, String column, boolean isAscending){
         switch (column){
             case "Grade":

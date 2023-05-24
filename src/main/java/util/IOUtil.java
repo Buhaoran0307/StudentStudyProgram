@@ -29,6 +29,11 @@ import java.util.Map;
 import static com.itextpdf.text.FontFactory.TIMES_ROMAN;
 
 public class IOUtil {
+    /**
+     * gain png image from disk
+     * @param path the path of the image
+     * @return the image object
+     */
     public static Image gainImage(String path) {
         Image image = null;
         FileInputStream fileInputStream;
@@ -261,6 +266,10 @@ public class IOUtil {
 
     }
 
+    /**
+     * get the subject helper map from json
+     * @return the subject helper map
+     */
     public static Map<String,String> readSubjectHelper(){
         Map<String,String> map = null;
         Gson gson = new Gson();
