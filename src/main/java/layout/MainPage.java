@@ -122,7 +122,7 @@ public class MainPage extends JPanel {
             JOptionPane.showConfirmDialog(mainFrame, "Refresh successfully !", "Confirmation", JOptionPane.DEFAULT_OPTION);
         });
 
-
+        //Set checkAward Button
         this.checkAward.setBounds(20,200,150,30);
         this.checkAward.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
         this.checkAward.addActionListener(e -> {
@@ -135,6 +135,7 @@ public class MainPage extends JPanel {
 
         });
         this.add(checkAward);
+
         //Select and Schedule button
         this.outputGPA.setBounds(20,250,150,30);
         this.outputGrade.setBounds(20,300,150,30);
