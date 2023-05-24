@@ -17,10 +17,25 @@ import static util.IOUtil.writeStudentJson;
 
 public class ForgetPasswordFrame extends JFrame {
     Container container = this.getContentPane();
+    /**
+     *this is used to get the input of the username
+     */
     private JTextField userNameField;
+    /**
+     * this field is used to get the input of the user password
+     */
     private JPasswordField newPasswordField;
+    /**
+     * this field to used to get the input of the phone number
+     */
     private JTextField phoneNumberFiled;
+    /**
+     * the confirm button that get the input data for further process
+     */
     private JButton confirmButton;
+    /**
+     * this button is used to quit the forget password frame and back to the main page
+     */
     private JButton backButton;
 
     public ForgetPasswordFrame() {

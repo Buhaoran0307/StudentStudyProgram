@@ -4,7 +4,6 @@ import layout.LoginFrame;
 import layout.MainFrame;
 import layout.MainPage;
 import util.IOUtil;
-import util.Initialization;
 
 public class MainProgram {
     public static void main(String[] args) {

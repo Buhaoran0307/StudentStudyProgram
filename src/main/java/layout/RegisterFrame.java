@@ -12,15 +12,46 @@ import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class is used to implement the register function of the system.
+ * The user can use valid personal information to register to the system.
+ *
+ */
+
 public class RegisterFrame extends JFrame{
+    /**
+     * To enter user's username(student ID)
+     */
     private JTextField name;
+    /**
+     * To enter user's nickname
+     */
     private JTextField nickname;
+    /**
+     * To enter user's phone No.
+     */
     private JTextField phone;
+    /**
+     * To enter user's password
+     */
     private JTextField password;
 
+    /**
+     * The button which implement Sign Up operation when clicked
+     */
     private JButton signUp;
+    /**
+     * The button which implement Go Back To Previous Pages operation when clicked
+     */
     private JButton goBack;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
+
+    /**
+     * Constructor for Register Page
+     */
     public RegisterFrame(){
 
         Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
@@ -153,6 +184,10 @@ public class RegisterFrame extends JFrame{
     }
 
 //    //button action  listener classes
+
+    /**
+     * Action Listener for sign up button
+     */
     class signUpListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -184,7 +219,7 @@ public class RegisterFrame extends JFrame{
             String nickName_from_text = nickname.getText();
             String password_from_text = password.getText();
 
-            //轮询给出学号
+            //Polling and gives out the student ID
             IOUtil.readJson();
             int temp_username=2020001;
             while(ConstantParameters.studentMap.get(temp_username)!=null){
@@ -194,7 +229,7 @@ public class RegisterFrame extends JFrame{
             ConstantParameters.studentMap.put(temp_username,student);
             System.out.println(ConstantParameters.studentMap.size());
 
-            //写回json
+            //write back to json
             Gson gson = new Gson();
             String studentJson = gson.toJson(ConstantParameters.studentMap);
             try {
@@ -210,7 +245,9 @@ public class RegisterFrame extends JFrame{
             new LoginFrame();
         }
     }
-
+    /**
+     * Action Listener for Go Back button
+     */
     class goBackListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             dispose();
@@ -218,7 +255,11 @@ public class RegisterFrame extends JFrame{
         }
     }
 
-//    //判断数字位数
+    /**
+     * To calculate the length of an integer
+     * @param number the number which is needed to calculate
+     * @return the length of the number.
+     */
     public int lenth(long number){
         int count = 0;
         while(number!=0){

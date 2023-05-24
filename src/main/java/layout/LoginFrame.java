@@ -7,19 +7,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class LoginFrame extends JFrame {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
-    private JButton registerButton;
-    private JButton forgottenButton;
-    private JLabel buptImgLable;
+/**
+ * This class is used to implement the login function of the system.
+ * The user can use valid personal information to register to the system.
+ *
+ */
 
+public class LoginFrame extends JFrame {
+    /**
+     * To enter user's username(student ID)
+     */
+    private JTextField usernameField;
+    /**
+     * TO enter the user's password
+     */
+    private JPasswordField passwordField;
+    /**
+     * The button which implement login operation when clicked
+     */
+    private JButton loginButton;
+    /**
+     * The button which implement register operation when clicked
+     */
+    private JButton registerButton;
+    /**
+     * The button which implement forget password operation when clicked
+     */
+    private JButton forgottenButton;
+    /**
+     * Used to enter the BUPT icons on the page.
+     */
+    private JLabel buptImgLable;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
 
+    /**
+     * Constructor for Login page
+     */
     public LoginFrame() {
         System.out.println("[log] Create LoginFrame .......");
-        //采用所有元素手动布局的方式
+        //All elements are layed out by hand
         Image image;
         image = IOUtil.gainImage("src/main/resources/Icon/EStudy.png");
         this.setIconImage(image);
@@ -58,13 +87,13 @@ public class LoginFrame extends JFrame {
         container.add(infoLabel);
 
 
-        //设置输入框布局
+        //Enter box layout
         JPanel textPanel = new JPanel();
         textPanel.setSize(450, 250);
         textPanel.setLocation(10, 160);
         textPanel.setLayout(null);
         container.add(textPanel);
-        //username文字布局
+        //username text layout
         Image userIDImg = IOUtil.gainImage("src/main/resources/Icon/userID.jpg");
         ImageIcon userIDIcon = new ImageIcon(userIDImg);
         JLabel usernameLabel = new JLabel("Username:",userIDIcon,JLabel.LEFT);
@@ -73,14 +102,14 @@ public class LoginFrame extends JFrame {
         usernameLabel.setLocation(50, 50);
         textPanel.add(usernameLabel);
 
-        //username输入框布局
+        //username input layout
         usernameField = new JTextField();
         usernameField.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         usernameField.setSize(300, 40);
         usernameField.setLocation(50, 85);
         textPanel.add(usernameField);
 
-        //password文字布局
+        //password text layout
         Image passwordImg = IOUtil.gainImage("src/main/resources/Icon/password.jpg");
         ImageIcon passwordIcon = new ImageIcon(passwordImg);
         JLabel passwordLabel = new JLabel("Password:",passwordIcon,JLabel.LEFT);
@@ -89,16 +118,16 @@ public class LoginFrame extends JFrame {
         passwordLabel.setLocation(50, 140);
         textPanel.add(passwordLabel);
 
-        //password输入框布局
+        //password text layout
         passwordField = new JPasswordField();
         passwordField.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         passwordField.setSize(300, 40);
         passwordField.setLocation(50, 175);
         textPanel.add(passwordField);
 
-        //设置完成
+        //Set over
 
-        //设置button布局
+        //buttons layout
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450, 200);
         buttonPanel.setLocation(10, 400);
@@ -107,7 +136,7 @@ public class LoginFrame extends JFrame {
         loginButton = new JButton("Login");
         registerButton = new JButton("Register");
         forgottenButton = new JButton("Forget your password?");
-        //添加button布局
+        //buttons layout
         loginButton.setSize(100, 40);
         loginButton.setLocation(60, 10);
         loginButton.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
@@ -135,11 +164,13 @@ public class LoginFrame extends JFrame {
         System.out.println("[log] Create LoginFrame : successful");
     }
 
-    //内部类实现button响应
+    /**
+     * Action listener for Login button
+     */
     class LoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-             //验证非空
+             //empty validation
             String test_password = new String(passwordField.getPassword());
             if(usernameField.getText().equals("")||test_password.equals("")){
                 JOptionPane.showMessageDialog(LoginFrame.this, "Warning! None of the blank could be space.");
@@ -160,11 +191,11 @@ public class LoginFrame extends JFrame {
             }
         }
 
-        //登陆验证
+        //Login validation
         private boolean authenticate(String username, String password) {
             IOUtil.readJson();
             int username_int = Integer.parseInt(username);
-            //是否查询非空，是否登陆成功
+            //empty validation
             if(ConstantParameters.studentMap.get(username_int) != null){
                 String password_from_json = ConstantParameters.studentMap.get(username_int).getPassword();
                 return password.equals(password_from_json);
@@ -173,6 +204,10 @@ public class LoginFrame extends JFrame {
         }
 
     }
+
+    /**
+     * Action listener for Register button
+     */
     class RegisterListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -180,7 +215,9 @@ public class LoginFrame extends JFrame {
             new RegisterFrame();
         }
     }
-
+    /**
+     * Action listener for Forget Password button
+     */
     class forgetPasswordListener implements ActionListener{
 
         @Override

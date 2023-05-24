@@ -11,6 +11,10 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This JPanel is used to show the detailed information of the especial subject
+ * @version 1.0
+ */
 public class SubjectPage extends JPanel {
     public JButton back;
     public Subject subject;
