@@ -6,15 +6,7 @@ import util.IOUtil;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * This class is used for represent GUI. It will create the Main window of this program.
- * @version 1.0
- * @author Haoran Bu
- */
 public class MainFrame extends JFrame {
-    /**
-     * Record the user who is operating now
-     */
     public static Student localUser;
     /**
      * The position of JFrame.(X-axis)
@@ -37,16 +29,10 @@ public class MainFrame extends JFrame {
      */
     public static CardLayout cardLayout;
     /**
-     * This instant contains every Page used in the program which is invoked by cardLayout.
+     * This instant contains every Page used in the game which is invoked by cardLayout.
      */
     public static JPanel cards;
-    /**
-     * Create the main JPanel
-     */
     private final MainPage mainPage;
-    /**
-     * Create the personal page JPanel
-     */
     private final PersonalPage personalPage;
 
     static {
@@ -60,10 +46,9 @@ public class MainFrame extends JFrame {
         this.mainPage = new MainPage();
         this.personalPage = new PersonalPage(this);
     }
-
     /**
-     * Create the main JFrame window
-     */
+     * The mainFrame's constructor
+     * */
     public MainFrame() {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
@@ -71,27 +56,25 @@ public class MainFrame extends JFrame {
         this.initActionSource();
         this.initFrame();
     }
-
     /**
-     * Init the main page and personal page in the program
-     */
+     * The method to init the JPanel
+     * */
     private void initJPanel() {
         cards.add(this.mainPage, "MainPage");
         cards.add(this.personalPage,"PersonalPage");
         cardLayout.show(cards,"MainPage");
         this.add(cards);
     }
-
     /**
-     * Transfer this JFrame window to the page instance
-     */
+     * The method to init the action source
+     * */
     private void initActionSource() {
         mainPage.setMainFrame(this);
+        mainPage.personalImage.setMainFrame(this);
     }
-
     /**
-     * Init the main JFrame configs
-     */
+     * The method to init the frame
+     * */
     private void initFrame() {
         this.setTitle(" Student journey ");
         Image image;
@@ -101,5 +84,6 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setResizable(false);
+        //this.setAlwaysOnTop(true);
     }
 }

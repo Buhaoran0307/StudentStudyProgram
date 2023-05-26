@@ -1,5 +1,7 @@
 package layout;
-
+/**
+ * A page for the subjects
+ * */
 import ConstantPacket.ConstantParameters;
 import entity.Subject;
 import entity.SubjectInfo;
@@ -11,21 +13,32 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This JPanel is used to show the detailed information of the especial subject
- * @version 1.0
- */
 public class SubjectPage extends JPanel {
+    /**
+     * A button to go back
+     * */
     public JButton back;
+    /**
+     * A Subject called subject
+     * */
     public Subject subject;
+    /**
+     * A SubjectInfo called subjectInfo
+     * */
     public SubjectInfo subjectInfo;
+    /**
+     * A map called subjectHelper
+     * */
     public Map<String,String> subjectHelper;
 
     {
         this.back = new JButton(" back ");
         this.subjectHelper = IOUtil.readSubjectHelper();
     }
-
+    /**
+     * SubjectPage's constructor
+     * @param  subject the Subject
+     * */
     public SubjectPage(Subject subject){
         this.setLayout(null);
         this.setBounds(0,0,MainFrame.FRAME_WIDTH,MainFrame.FRAME_HEIGHT);
@@ -83,7 +96,11 @@ public class SubjectPage extends JPanel {
         this.add(back);
         System.out.println("Create SubjectPage : [successful]");
     }
-
+    /**
+     * the method to get the subject's name
+     * @param  subjectNo the number of the subject
+     * @return the name of the subject
+     * */
     private String getSubjectKey(int subjectNo) {
         switch (subjectNo){
             case 1:
