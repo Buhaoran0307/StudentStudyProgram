@@ -11,9 +11,18 @@ import java.util.ArrayList;
  * this page is for demonstrating student achievement and roles taken
  */
 public class AwardPage extends JPanel {
-    private final ArrayList<String> achievement; //student's achievement
-    private final ArrayList<String> role; //student's roles taken
-    public JButton back= new JButton(" back "); //back button to main page
+    /**
+     * student's achievement
+     */
+    private final ArrayList<String> achievement;
+    /**
+     * student's roles taken
+     */
+    private final ArrayList<String> role;
+    /**
+     * back button to main page
+     */
+    public JButton back= new JButton(" back ");
     public AwardPage(int studentID) {
         //get data
         IOUtil.readAwardHelper();

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * The utils package to init data.
+ * The utils package is to init data.
  */
 public class Initialization {
     /**

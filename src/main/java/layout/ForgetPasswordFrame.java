@@ -19,6 +19,9 @@ import static util.IOUtil.writeStudentJson;
  * Create forget password function
  */
 public class ForgetPasswordFrame extends JFrame {
+    /**
+     *this is used to get the container of the jFrame
+     */
     Container container = this.getContentPane();
     /**
      *this is used to get the input of the username
