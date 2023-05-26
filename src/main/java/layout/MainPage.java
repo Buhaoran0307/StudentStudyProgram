@@ -17,87 +17,88 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * ###### Table column name ######
- * ID --> subjectNo
- * Subject --> subjectName
- * Grade --> grade
- * Character --> character
- * Credit --> credit
- * Rank --> rank
- * Start Time --> startTime
+/*
+  ###### Table column name ######
+  ID --> subjectNo
+  Subject --> subjectName
+  Grade --> grade
+  Character --> character
+  Credit --> credit
+  Rank --> rank
+  Start Time --> startTime
  */
 
-
+/**
+ * This class is used for represent the main page.
+ * @version 1.0
+ */
 public class MainPage extends JPanel {
     /**
-     * A image panel for personal image
-     * */
+     * This is used to represent the user's image
+     */
     public final ImagePanel personalImage;
     /**
-     * A string for the names of the columns
-     * */
+     * This is used for grade table's header
+     */
     private final String[] columnNames = {"ID", "Subject", "Grade", "Character", "Credit", "Start Time"};
     /**
-     *The sort of the columns
-     * */
+     * This is used to record the sort config of the grade column. false: from largest to smallest
+     */
     private final boolean[] sortOfColumns;
     /**
-     * A label for GPA
-     * */
+     * This label component is used to represent the GPA marks
+     */
     private final JLabel GPA;
     /**
-     * A label for rank
-     * */
+     * This label component is used to represent the rank among students
+     */
     private final JLabel rank;
     /**
-     * A label to welcome
-     * */
+     * This label component is used to show hello information
+     */
     private final JLabel welcome;
     /**
-     * A label for name
-     * */
+     * This label component is used to show user's name
+     */
     private final JLabel name;
     /**
-     * A scroll pane
-     * */
+     * This JScrollPane component is used to create a scroll
+     */
     public JScrollPane jScrollPane;
     /**
-     * A button to refresh
-     * */
+     * This button component is used to refresh the grade
+     */
     public JButton refresh;
     /**
-     * A button named top
-     * */
+     * This button component is used to contain GPA and Rank info
+     */
     public JButton top;
     /**
-     * A button to out put GPA
-     * */
+     * This button component is used to print GPA certification in PDF format
+     */
     public JButton outputGPA;
     /**
-     * A button to out put grade
-     * */
+     * This button component is used to print trusted transcript in PDF format
+     */
     public JButton outputGrade;
     /**
-     * A button to check awards
-     * */
+     * This button component is used to check the user's award
+     */
     public JButton checkAward;
     /**
-     * the mainFrame
-     * */
+     * This variable is to track the main JFrame instance
+     */
     private MainFrame mainFrame;
     /**
-     * A table for the subjects
-     * */
+     * This JTable component is used to show the grade and subject info of every subject
+     */
     private JTable subjectTable;
     /**
-     * A hash map named subjectMap
-     * */
+     * This variable is used to save subject information
+     */
     private HashMap<String, Object> subjectMap;
 
-    /*
-    Init attributes in this class
-     */ {
+    {
         Image image = IOUtil.gainImage("src/main/resources/Icon/defaultUserIcon.png");
         this.personalImage = new ImagePanel(image);
         this.refresh = new JButton("refresh");
@@ -117,9 +118,10 @@ public class MainPage extends JPanel {
         }
         this.jScrollPane = new JScrollPane();
     }
+
     /**
-     * The mainPage's constructor
-     * */
+     * Create the main Page and init the component position.
+     */
     public MainPage() {
         System.out.println("[log] Create MainFrame .......");
         this.setLayout(null);
@@ -172,12 +174,11 @@ public class MainPage extends JPanel {
             JOptionPane.showConfirmDialog(mainFrame, "Refresh successfully !", "Confirmation", JOptionPane.DEFAULT_OPTION);
         });
 
-
+        //Set checkAward Button
         this.checkAward.setBounds(20,200,150,30);
         this.checkAward.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
         this.checkAward.addActionListener(e -> {
 
-                MainFrame.localUser.getStudentNo();
             MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
             AwardPage awardPage = new AwardPage(MainFrame.localUser.getStudentNo());
             MainFrame.cards.add(awardPage, "awardPage");
@@ -185,6 +186,7 @@ public class MainPage extends JPanel {
 
         });
         this.add(checkAward);
+
         //Select and Schedule button
         this.outputGPA.setBounds(20,250,150,30);
         this.outputGrade.setBounds(20,300,150,30);
@@ -211,19 +213,21 @@ public class MainPage extends JPanel {
 
         System.out.println("[log] Create MainFrame : successful");
     }
+
     /**
-     * The method to refresh
-     * */
+     * Refresh the grade table layout and total grades from files
+     */
     public void refresh() {
         IOUtil.readJson();
         subjectMap = new HashMap<>();
         refresh("ID", true);
     }
+
     /**
-     * The method to refresh the subject colum
-     * @param column the subject columns
-     * @param isAscending whether is ascended
-     * */
+     * Refresh the grade table layout and total grades from files
+     * @param column sort the row by this column value
+     * @param isAscending the sort order (false: from largest to smallest)
+     */
     public void refresh(String column, boolean isAscending) {
         if (MainFrame.localUser.getSelectedSubjects() == null) {
             MainFrame.localUser.setSelectedSubjects(new ArrayList<>());
@@ -288,49 +292,61 @@ public class MainPage extends JPanel {
         //Put JTable into jScrollPane
         this.jScrollPane.setViewportView(this.subjectTable);
         this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
-        int tableHeight = subjectTable.getRowHeight() * subjectTable.getRowCount();
-        if (tableHeight > 200) {
-            tableHeight = 200;
-        }
         this.jScrollPane.setPreferredSize(new Dimension(450, 200));
     }
 
+    /**
+     * Save the main JFrame instance
+     * @param mainFrame the reference of the main JFrame instance
+     */
     public void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
     }
 }
+
 /**
- * A class extends DefaultTableModel
- * */
+ * Refactor the DefaultTableModel class and create a new uneditable JTable
+ * @version 1.0
+ */
 class unEditionTable extends DefaultTableModel {
+    /**
+     * Create a instance of this class
+     * @param data the 2D data wanted to be shown.
+     * @param columnNames the headers of this table
+     */
     public unEditionTable(Object[][] data, Object[] columnNames) {
         super(data, columnNames);
     }
 
+    /**
+     *
+     * @param row             the row whose value is to be queried
+     * @param column          the column whose value is to be queried
+     * @return return false to refuse any edition
+     */
     @Override
     public boolean isCellEditable(int row, int column) {
         return false;
     }
 }
+
 /**
- * A class ImagePanel extends JPanel
- * */
+ * This class is used to show user's photo and made to be clickable.
+ */
 class ImagePanel extends JPanel implements ActionListener {
     /**
-     * A button called imageButton
-     * */
+     * Used to show photo
+     */
     private final JButton imageButton;
     /**
-     * A MainFrame called mainFrame
-     * */
-    private MainFrame mainFrame;
-    /**
-     * A ImageIcon called imageIcon
-     * */
+     * Used to contain image
+     */
     private ImageIcon imageIcon;
+
     /**
-     * ImagePanel's constructor
-     * */
+     * Use JPanel to contain a JButton which shows user's photo
+     * @param image User's photo
+     */
     public ImagePanel(Image image) {
         if (image == null) {
             image = IOUtil.gainImage("src/main/resources/Icon/defaultUserIcon.png");
@@ -349,9 +365,11 @@ class ImagePanel extends JPanel implements ActionListener {
         // 将图片按钮添加到面板中
         add(imageButton);
     }
+
     /**
-     * A method to deal with button click events
-     * */
+     * Set a click performance
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // 处理按钮的点击事件
@@ -360,18 +378,12 @@ class ImagePanel extends JPanel implements ActionListener {
         }
 
     }
+
     /**
-     * A method to set ImageIcon
-     * @param imageIcon the ImageIcon be wanted to set
-     * */
+     * Change user's photo
+     * @param imageIcon user's photo
+     */
     public void setImageIcon(ImageIcon imageIcon) {
         this.imageIcon = imageIcon;
-    }
-    /**
-     * A method to set MainFrame
-     * @param mainFrame the MainFrame be wanted to set
-     * */
-    public void setMainFrame(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
     }
 }

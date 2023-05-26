@@ -1,7 +1,5 @@
 package layout;
-/**
- * This class is the page for the students to login
- * */
+
 import ConstantPacket.ConstantParameters;
 import util.IOUtil;
 
@@ -9,39 +7,48 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * This class is used to implement the login function of the system.
+ * The user can use valid personal information to register to the system.
+ *
+ */
+
 public class LoginFrame extends JFrame {
     /**
-     * A field for students to input their username
-     * */
-    private JTextField usernameField;
+     * To enter user's username(student ID)
+     */
+    private final JTextField usernameField;
     /**
-     * A field for students to input their password
-     * */
-    private JPasswordField passwordField;
+     * TO enter the user's password
+     */
+    private final JPasswordField passwordField;
     /**
-     * A button to login
-     * */
-    private JButton loginButton;
+     * The button which implement login operation when clicked
+     */
+    private final JButton loginButton;
     /**
-     * A button to register
-     * */
-    private JButton registerButton;
+     * The button which implement register operation when clicked
+     */
+    private final JButton registerButton;
     /**
-     * A button to set new password
-     * */
-    private JButton forgottenButton;
+     * The button which implement forget password operation when clicked
+     */
+    private final JButton forgottenButton;
     /**
-     * A label for bupt image
-     * */
-    private JLabel buptImgLable;
-
+     * Used to enter the BUPT icons on the page.
+     */
+    private final JLabel buptImgLable;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
+
     /**
-     * The login frame's constructor
-     * */
+     * Constructor for Login page
+     */
     public LoginFrame() {
         System.out.println("[log] Create LoginFrame .......");
-        //采用所有元素手动布局的方式
+        //All elements are layed out by hand
         Image image;
         image = IOUtil.gainImage("src/main/resources/Icon/EStudy.png");
         this.setIconImage(image);
@@ -80,13 +87,13 @@ public class LoginFrame extends JFrame {
         container.add(infoLabel);
 
 
-        //设置输入框布局
+        //Enter box layout
         JPanel textPanel = new JPanel();
         textPanel.setSize(450, 250);
         textPanel.setLocation(10, 160);
         textPanel.setLayout(null);
         container.add(textPanel);
-        //username文字布局
+        //username text layout
         Image userIDImg = IOUtil.gainImage("src/main/resources/Icon/userID.jpg");
         ImageIcon userIDIcon = new ImageIcon(userIDImg);
         JLabel usernameLabel = new JLabel("Username:",userIDIcon,JLabel.LEFT);
@@ -95,14 +102,14 @@ public class LoginFrame extends JFrame {
         usernameLabel.setLocation(50, 50);
         textPanel.add(usernameLabel);
 
-        //username输入框布局
+        //username input layout
         usernameField = new JTextField();
         usernameField.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         usernameField.setSize(300, 40);
         usernameField.setLocation(50, 85);
         textPanel.add(usernameField);
 
-        //password文字布局
+        //password text layout
         Image passwordImg = IOUtil.gainImage("src/main/resources/Icon/password.jpg");
         ImageIcon passwordIcon = new ImageIcon(passwordImg);
         JLabel passwordLabel = new JLabel("Password:",passwordIcon,JLabel.LEFT);
@@ -111,16 +118,16 @@ public class LoginFrame extends JFrame {
         passwordLabel.setLocation(50, 140);
         textPanel.add(passwordLabel);
 
-        //password输入框布局
+        //password text layout
         passwordField = new JPasswordField();
         passwordField.setFont(new Font("Comic Sans Ms", Font.BOLD, 20));
         passwordField.setSize(300, 40);
         passwordField.setLocation(50, 175);
         textPanel.add(passwordField);
 
-        //设置完成
+        //Set over
 
-        //设置button布局
+        //buttons layout
         JPanel buttonPanel = new JPanel();
         buttonPanel.setSize(450, 200);
         buttonPanel.setLocation(10, 400);
@@ -129,7 +136,7 @@ public class LoginFrame extends JFrame {
         loginButton = new JButton("Login");
         registerButton = new JButton("Register");
         forgottenButton = new JButton("Forget your password?");
-        //添加button布局
+        //buttons layout
         loginButton.setSize(100, 40);
         loginButton.setLocation(60, 10);
         loginButton.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
@@ -157,14 +164,13 @@ public class LoginFrame extends JFrame {
         System.out.println("[log] Create LoginFrame : successful");
     }
 
-    //内部类实现button响应
     /**
-     * A listener to listen to the login button
-     * */
+     * Action listener for Login button
+     */
     class LoginListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-             //验证非空
+             //empty validation
             String test_password = new String(passwordField.getPassword());
             if(usernameField.getText().equals("")||test_password.equals("")){
                 JOptionPane.showMessageDialog(LoginFrame.this, "Warning! None of the blank could be space.");
@@ -185,16 +191,11 @@ public class LoginFrame extends JFrame {
             }
         }
 
-        //登陆验证
-        /**
-         * A method to confirm if the username and password are right
-         *  @param username the student's username
-         *  @param password the student's password
-         * */
+        //Login validation
         private boolean authenticate(String username, String password) {
             IOUtil.readJson();
             int username_int = Integer.parseInt(username);
-            //是否查询非空，是否登陆成功
+            //empty validation
             if(ConstantParameters.studentMap.get(username_int) != null){
                 String password_from_json = ConstantParameters.studentMap.get(username_int).getPassword();
                 return password.equals(password_from_json);
@@ -203,9 +204,10 @@ public class LoginFrame extends JFrame {
         }
 
     }
+
     /**
-     * A listener to listen to the register button
-     * */
+     * Action listener for Register button
+     */
     class RegisterListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -214,8 +216,8 @@ public class LoginFrame extends JFrame {
         }
     }
     /**
-     * A listener to listen to the forgetPassword button
-     * */
+     * Action listener for Forget Password button
+     */
     class forgetPasswordListener implements ActionListener{
 
         @Override

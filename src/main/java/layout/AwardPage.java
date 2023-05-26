@@ -1,64 +1,48 @@
 package layout;
-/**
- * This class is the page show the awards the student gains and it extends JPanel
- * */
+
 import ConstantPacket.ConstantParameters;
 import util.IOUtil;
-import util.LayoutUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
+/**
+ * this page is for demonstrating student achievement and roles taken
+ */
 public class AwardPage extends JPanel {
-    /**
-     * The achievements the student has get
-     * */
-    private ArrayList<String> achievement;
-    /**
-     * The position held by the student
-     * */
-    private ArrayList<String> role;
-    /**
-     * A button to go back to the forward page
-     * */
-    public JButton back= new JButton(" back ");
-    /**
-     * The award page's constructor
-     * @param studentID the student's ID
-     * */
+    private final ArrayList<String> achievement; //student's achievement
+    private final ArrayList<String> role; //student's roles taken
+    public JButton back= new JButton(" back "); //back button to main page
     public AwardPage(int studentID) {
+        //get data
         IOUtil.readAwardHelper();
         this.setLayout(null);
         this.setBounds(0, 0, MainFrame.FRAME_WIDTH, MainFrame.FRAME_HEIGHT);
-        //System.out.println(studentID);
         this.role = ConstantParameters.studentAwardMap.get(studentID).getRole();
         this.achievement = ConstantParameters.studentAwardMap.get(studentID).getAchievement();
-        //System.out.println();
         System.out.println("Create AwardPage...");
-
+        //show title
         JLabel studentLabel = new JLabel(ConstantParameters.studentMap.get(studentID).getName()+"'s Award and Roles undertaken");
         studentLabel.setFont(new Font("Comic Sans Ms", Font.PLAIN, 30));
         int labelWidth = studentLabel.getPreferredSize().width;
         int labelHeight = studentLabel.getPreferredSize().height;
         studentLabel.setBounds((MainFrame.FRAME_WIDTH - labelWidth) / 3, 40, 800, labelHeight);
         this.add(studentLabel);
-
+        //show achievement
         int lx = 100;
         int y = 80;
-        int space = 300;
         JLabel jAward1 = new JLabel("Award  :");
         jAward1.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         jAward1.setBounds(lx, y, 300, 30);
         this.add(jAward1);
-        String awards="";
+        StringBuilder awards= new StringBuilder();
         for(String a:achievement){
-            awards+=" "+a+"\n";
+            awards.append(" ").append(a).append("\n");
 
         }
-        if(awards.equals(""))awards="Not found anything";
-        JTextArea textArea = new JTextArea(awards);
+        if(awards.toString().equals("")) awards = new StringBuilder("Not found anything");
+        JTextArea textArea = new JTextArea(awards.toString());
         textArea.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         textArea.setBounds(0, 0, 400, 100);
         textArea.setLineWrap(true);
@@ -67,19 +51,19 @@ public class AwardPage extends JPanel {
         scrollPane.setBounds(155, 120, 400, 100);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.add(scrollPane);
-
+        //show roles taken
         JLabel jrole = new JLabel("Roles undertaken :");
         jrole.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         jrole.setBounds(lx, 220, 500, 30);
         this.add(jrole);
-        String roles="";
+        StringBuilder roles= new StringBuilder();
         for(String a:role){
-            roles+=" "+a+"\n";
+            roles.append(" ").append(a).append("\n");
 
         }
-        if(roles.equals(""))roles="Not found anything";
+        if(roles.toString().equals("")) roles = new StringBuilder("Not found anything");
         System.out.println(roles);
-        JTextArea textArea2 = new JTextArea(roles);
+        JTextArea textArea2 = new JTextArea(roles.toString());
         textArea2.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         textArea2.setBounds(0, 0, 400, 100);
         textArea2.setLineWrap(true);
@@ -89,7 +73,7 @@ public class AwardPage extends JPanel {
         scrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         this.add(scrollPane2);
 
-
+        //set back button
         this.back.setBounds(300, 370, 100, 30);
         this.back.setFont(new Font("Comic Sans Ms", Font.PLAIN, 14));
         this.back.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.cards, "MainPage"));

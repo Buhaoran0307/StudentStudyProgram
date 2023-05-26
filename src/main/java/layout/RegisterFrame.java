@@ -1,7 +1,5 @@
 package layout;
-/**
- * A frame to register
- * */
+
 import ConstantPacket.ConstantParameters;
 import com.google.gson.Gson;
 import entity.Student;
@@ -14,35 +12,46 @@ import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class is used to implement the register function of the system.
+ * The user can use valid personal information to register to the system.
+ *
+ */
+
 public class RegisterFrame extends JFrame{
     /**
-     * A field for the student to input the name
-     * */
-    private JTextField name;
+     * To enter user's username(student ID)
+     */
+    private final JTextField name;
     /**
-     * A field for the student to input the nickname
-     * */
-    private JTextField nickname;
+     * To enter user's nickname
+     */
+    private final JTextField nickname;
     /**
-     * A field for the student to input the phone number
-     * */
-    private JTextField phone;
+     * To enter user's phone No.
+     */
+    private final JTextField phone;
     /**
-     * A field for the student to input password
-     * */
-    private JTextField password;
+     * To enter user's password
+     */
+    private final JTextField password;
+
     /**
-     * A button to sign up
-     * */
-    private JButton signUp;
+     * The button which implement Sign Up operation when clicked
+     */
+    private final JButton signUp;
     /**
-     * A button for back
-     * */
-    private JButton goBack;
+     * The button which implement Go Back To Previous Pages operation when clicked
+     */
+    private final JButton goBack;
+    /**
+     * Get the container of the JPanel of the current page
+     */
     Container container = this.getContentPane();
+
     /**
-     * RegisterFrame's constructor
-     * */
+     * Constructor for Register Page
+     */
     public RegisterFrame(){
 
         Image buptImage = IOUtil.gainImage("src/main/resources/Icon/BUPT.png");
@@ -175,14 +184,11 @@ public class RegisterFrame extends JFrame{
     }
 
 //    //button action  listener classes
+
     /**
-     * A class implements ActionListener for the button signUp
-     * */
+     * Action Listener for sign up button
+     */
     class signUpListener implements ActionListener{
-        /**
-         * A method to deal with the action to sign up
-         * @param e the action event wanted to be handled
-         * */
         @Override
         public void actionPerformed(ActionEvent e) {
             //to authenticate if the inputs are empty
@@ -192,7 +198,7 @@ public class RegisterFrame extends JFrame{
             }
             //to authenticate if phone number is valid
             try{
-                long phoneNumber = Long.parseLong(phone.getText());
+                Long.parseLong(phone.getText());
             }catch (Exception err){
                 JOptionPane.showMessageDialog(RegisterFrame.this, "Warning! Your phone number should be pure numbers!");
                 return;
@@ -213,7 +219,7 @@ public class RegisterFrame extends JFrame{
             String nickName_from_text = nickname.getText();
             String password_from_text = password.getText();
 
-            //轮询给出学号
+            //Polling and gives out the student ID
             IOUtil.readJson();
             int temp_username=2020001;
             while(ConstantParameters.studentMap.get(temp_username)!=null){
@@ -223,7 +229,7 @@ public class RegisterFrame extends JFrame{
             ConstantParameters.studentMap.put(temp_username,student);
             System.out.println(ConstantParameters.studentMap.size());
 
-            //写回json
+            //write back to json
             Gson gson = new Gson();
             String studentJson = gson.toJson(ConstantParameters.studentMap);
             try {
@@ -240,25 +246,20 @@ public class RegisterFrame extends JFrame{
         }
     }
     /**
-     * A class implements ActionListener for the button goBack
-     * */
+     * Action Listener for Go Back button
+     */
     class goBackListener implements ActionListener{
-        /**
-         * A method to deal with the action to go back to the forward frame
-         * @param e the action event wanted to be handled
-         * */
         public void actionPerformed(ActionEvent e) {
             dispose();
             new LoginFrame();
         }
     }
 
-//    //判断数字位数
     /**
-     * A method to judge digit
-     * @param number the digit wanted to be judge
-     * @return count the number of the digit
-     * */
+     * To calculate the length of an integer
+     * @param number the number which is needed to calculate
+     * @return the length of the number.
+     */
     public int lenth(long number){
         int count = 0;
         while(number!=0){

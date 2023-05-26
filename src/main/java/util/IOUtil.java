@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import entity.StudentAward;
@@ -19,16 +18,22 @@ import com.itextpdf.text.Paragraph;
 
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.Image;
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.itextpdf.text.FontFactory.TIMES_ROMAN;
-
+/**
+ * The utils package for IO operation
+ */
 public class IOUtil {
+    /**
+     * gain png image from disk
+     * @param path the path of the image
+     * @return the image object
+     */
     public static Image gainImage(String path) {
         Image image = null;
         FileInputStream fileInputStream;
@@ -45,9 +50,7 @@ public class IOUtil {
         }
         return image;
     }
-    /**
-     * this method is to raed subjectInfo.json and student.json
-     */
+
     public static void readJson() {
         Gson gson = new Gson();
         String filePath = "src/main/java/DataSet/subjectInfo.json";
@@ -64,9 +67,6 @@ public class IOUtil {
             e.printStackTrace();
         }
     }
-    /**
-     * this method is to raed studentAward.json
-     */
     public static void readAwardHelper(){
         Gson gson = new Gson();
         String filePath = "src/main/java/DataSet/studentAward.json";
@@ -82,15 +82,12 @@ public class IOUtil {
         }
 
     }
-    /**
-     * this method is to write student.json
-     */
     public static void writeStudentJson() {
         Gson gson = new Gson();
         String filePath = "src/main/java/DataSet/student.json";
 
         try {
-            FileWriter writer = new FileWriter(new File(filePath));
+            FileWriter writer = new FileWriter(filePath);
             writer.write(gson.toJson(ConstantParameters.studentMap));
             writer.close();
             System.out.println("finish");
@@ -115,7 +112,7 @@ public class IOUtil {
         }
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+        PdfWriter.getInstance(document, Files.newOutputStream(outputFile.toPath()));
         document.open();
         ArrayList<Subject> subjects = currentStudent.getSelectedSubjects();
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -173,7 +170,7 @@ public class IOUtil {
         }
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+        PdfWriter.getInstance(document, Files.newOutputStream(outputFile.toPath()));
         document.open();
 
         Font boldFontTitle = new Font(Font.FontFamily.TIMES_ROMAN, 25, Font.BOLD,BaseColor.RED);
@@ -268,9 +265,10 @@ public class IOUtil {
         document.close();
 
     }
+
     /**
-     * this method is get the map tough read subjectHelper.json
-     * @return map
+     * get the subject helper map from json
+     * @return the subject helper map
      */
     public static Map<String,String> readSubjectHelper(){
         Map<String,String> map = null;

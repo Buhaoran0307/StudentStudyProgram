@@ -1,7 +1,5 @@
 package layout;
-/**
- * This class is the page for the students who forget their passwords and want to set new passwords
- * */
+
 import entity.Student;
 import util.DataUtil;
 import util.IOUtil;
@@ -17,32 +15,32 @@ import static ConstantPacket.ConstantParameters.studentMap;
 import static util.IOUtil.readJson;
 import static util.IOUtil.writeStudentJson;
 
+/**
+ * Create forget password function
+ */
 public class ForgetPasswordFrame extends JFrame {
-
     Container container = this.getContentPane();
     /**
-     * A field for students to input their user name
-     * */
-    private JTextField userNameField;
+     *this is used to get the input of the username
+     */
+    private final JTextField userNameField;
     /**
-     * A field for students to input their new password
-     * */
-    private JPasswordField newPasswordField;
+     * this field is used to get the input of the user password
+     */
+    private final JPasswordField newPasswordField;
     /**
-     * A field for students to input their phone number
-     * */
-    private JTextField phoneNumberFiled;
+     * this field to used to get the input of the phone number
+     */
+    private final JTextField phoneNumberFiled;
     /**
-     * A button to confirm the information
-     * */
-    private JButton confirmButton;
+     * the confirm button that get the input data for further process
+     */
+    private final JButton confirmButton;
     /**
-     * A button to go back to the forward page
-     * */
-    private JButton backButton;
-    /**
-     * The forget password page's constructor
-     * */
+     * this button is used to quit the forget password frame and back to the main page
+     */
+    private final JButton backButton;
+
     public ForgetPasswordFrame() {
         //set forget password page's frame
         this.setBounds(520, 30, 450, 600);
@@ -163,9 +161,7 @@ public class ForgetPasswordFrame extends JFrame {
 
         setVisible(true);
     }
-    /**
-     * A listener class to listen to the confirm button
-     * */
+
     class confirmButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -206,7 +202,7 @@ public class ForgetPasswordFrame extends JFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong user name", "wrong userName", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong user name", "wrong userName", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
@@ -244,9 +240,6 @@ public class ForgetPasswordFrame extends JFrame {
             writeStudentJson();
         }
     }
-    /**
-     * A listener class to listen to the back button
-     * */
     class BackListener implements ActionListener{
 
         @Override
