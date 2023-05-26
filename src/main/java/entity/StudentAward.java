@@ -1,9 +1,9 @@
 package entity;
+
+import java.util.ArrayList;
 /**
  * This class includes the awards the student has gained
  * */
-import java.util.ArrayList;
-
 public class StudentAward {
     /**
      * The achievements the student has get
@@ -58,10 +58,10 @@ public class StudentAward {
      * @return this string
      * */
     public String toString() {
-        String s="";
+        StringBuilder s= new StringBuilder();
         for(String a : achievement){
-            s=s+a+" ";
+            s.append(a).append(" ");
         }
-        return s;
+        return s.toString();
     }
 }

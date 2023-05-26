@@ -1,10 +1,10 @@
-import ConstantPacket.ConstantParameters;
-import layout.AwardPage;
 import layout.LoginFrame;
-import layout.MainFrame;
-import layout.MainPage;
 import util.IOUtil;
+import util.Initialization;
 
+/**
+ * The main method
+ */
 public class MainProgram {
     public static void main(String[] args) {
         //(new Initialization()).DataInitialization();

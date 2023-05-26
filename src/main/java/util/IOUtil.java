@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import entity.StudentAward;
@@ -19,15 +18,16 @@ import com.itextpdf.text.Paragraph;
 
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.Image;
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.itextpdf.text.FontFactory.TIMES_ROMAN;
-
+/**
+ * The utils package for IO operation
+ */
 public class IOUtil {
     /**
      * gain png image from disk
@@ -87,7 +87,7 @@ public class IOUtil {
         String filePath = "src/main/java/DataSet/student.json";
 
         try {
-            FileWriter writer = new FileWriter(new File(filePath));
+            FileWriter writer = new FileWriter(filePath);
             writer.write(gson.toJson(ConstantParameters.studentMap));
             writer.close();
             System.out.println("finish");
@@ -112,7 +112,7 @@ public class IOUtil {
         }
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+        PdfWriter.getInstance(document, Files.newOutputStream(outputFile.toPath()));
         document.open();
         ArrayList<Subject> subjects = currentStudent.getSelectedSubjects();
         Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -170,7 +170,7 @@ public class IOUtil {
         }
 
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+        PdfWriter.getInstance(document, Files.newOutputStream(outputFile.toPath()));
         document.open();
 
         Font boldFontTitle = new Font(Font.FontFamily.TIMES_ROMAN, 25, Font.BOLD,BaseColor.RED);

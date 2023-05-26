@@ -17,27 +17,27 @@ public class LoginFrame extends JFrame {
     /**
      * To enter user's username(student ID)
      */
-    private JTextField usernameField;
+    private final JTextField usernameField;
     /**
      * TO enter the user's password
      */
-    private JPasswordField passwordField;
+    private final JPasswordField passwordField;
     /**
      * The button which implement login operation when clicked
      */
-    private JButton loginButton;
+    private final JButton loginButton;
     /**
      * The button which implement register operation when clicked
      */
-    private JButton registerButton;
+    private final JButton registerButton;
     /**
      * The button which implement forget password operation when clicked
      */
-    private JButton forgottenButton;
+    private final JButton forgottenButton;
     /**
      * Used to enter the BUPT icons on the page.
      */
-    private JLabel buptImgLable;
+    private final JLabel buptImgLable;
     /**
      * Get the container of the JPanel of the current page
      */

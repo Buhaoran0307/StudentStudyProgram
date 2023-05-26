@@ -9,7 +9,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * The utils package is to init data.
+ */
 public class Initialization {
     /**
      * this method is used to initialize the test data
@@ -19,7 +21,7 @@ public class Initialization {
         /*
         create subjectInfo table
          */
-        Map<Integer, SubjectInfo> subjectInfoMap = new HashMap<Integer, SubjectInfo>();
+        Map<Integer, SubjectInfo> subjectInfoMap = new HashMap<>();
         subjectInfoMap.put(1,new SubjectInfo(1,"JAVA",2,"required"));
         subjectInfoMap.put(2,new SubjectInfo(2,"Data structure",4,"required"));
         subjectInfoMap.put(3,new SubjectInfo(3,"AI",2,"optional"));
@@ -84,9 +86,9 @@ public class Initialization {
                 "555",selectedSubjects7));
         studentMap.put(2020008,new Student("Phoebe",2020008,13888008,"smelly cat",
                 "666",selectedSubjects8));
-        studentMap.put(2020008,new Student("Chandler",2020009,13888009,"chan chan man",
+        studentMap.put(2020009,new Student("Chandler",2020009,13888009,"chan chan man",
                 "777",selectedSubjects9));
-        studentMap.put(2020009,new Student("Joey",2020010,13888019,"pizza",
+        studentMap.put(2020010,new Student("Joey",2020010,13888019,"pizza",
                 "888",selectedSubjects10));
         String studentJson = gson.toJson(studentMap);
          /*

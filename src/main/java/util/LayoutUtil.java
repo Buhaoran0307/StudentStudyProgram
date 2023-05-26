@@ -6,7 +6,9 @@ import entity.SubjectInfo;
 
 import java.util.*;
 
-
+/**
+ * The utils package to deal with layout
+ */
 public class LayoutUtil {
     /**
      * Gain all subject information of one student
@@ -37,15 +39,15 @@ public class LayoutUtil {
         }
         return data;
     }
-    /**
-     * ###### Table column name ######
-     * ID --> subjectNo
-     * Subject --> subjectName
-     * grade --> grade
-     * character --> character
-     * credit --> credit
-     * rank --> rank
-     * startTime --> startTime
+    /*
+      ###### Table column name ######
+      ID --> subjectNo
+      Subject --> subjectName
+      grade --> grade
+      character --> character
+      credit --> credit
+      rank --> rank
+      startTime --> startTime
      */
     /**
      * get the subject info of the subject
@@ -75,19 +77,9 @@ public class LayoutUtil {
         switch (column){
             case "Grade":
                 if (isAscending){
-                    selectedSubjects.sort(new Comparator<Subject>() {
-                        @Override
-                        public int compare(Subject s1, Subject s2) {
-                            return s1.getGrade() - s2.getGrade();
-                        }
-                    });
+                    selectedSubjects.sort(Comparator.comparingInt(Subject::getGrade));
                 }else {
-                    selectedSubjects.sort(new Comparator<Subject>() {
-                        @Override
-                        public int compare(Subject s1, Subject s2) {
-                            return  s2.getGrade() - s1.getGrade();
-                        }
-                    });
+                    selectedSubjects.sort((s1, s2) -> s2.getGrade() - s1.getGrade());
                 }
                 break;
             case "Start Time":
