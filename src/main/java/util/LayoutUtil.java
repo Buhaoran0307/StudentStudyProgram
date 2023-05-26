@@ -6,17 +6,13 @@ import entity.SubjectInfo;
 
 import java.util.*;
 
-/**
- * The utils package to deal with layout
- */
+
 public class LayoutUtil {
     /**
-     * Gain all subject information of one student
-     * @param selectedSubjects the selected subjects to be shown
-     * @param columnNames the names of the columns
-     * @param column sort by this column value
+     * A method to get the get the subject information
+     * @param selectedSubjects the subject list
+     * @param columnNames the name of the columns
      * @param isAscending the sort order
-     * @return the sorted subject information
      */
     public static Object[][] getSubjectInfo(ArrayList<Subject> selectedSubjects, String[] columnNames, String column, boolean isAscending){
         Object[][] data;
@@ -39,20 +35,15 @@ public class LayoutUtil {
         }
         return data;
     }
-    /*
-      ###### Table column name ######
-      ID --> subjectNo
-      Subject --> subjectName
-      grade --> grade
-      character --> character
-      credit --> credit
-      rank --> rank
-      startTime --> startTime
-     */
     /**
-     * get the subject info of the subject
-     * @param subject the subject wanted to be searched
-     * @return the map contain subject information
+     * ###### Table column name ######
+     * ID --> subjectNo
+     * Subject --> subjectName
+     * grade --> grade
+     * character --> character
+     * credit --> credit
+     * rank --> rank
+     * startTime --> startTime
      */
     public static HashMap<String, String> getMapSubjectInfo(Subject subject){
         HashMap<String,String> data = new HashMap<>();
@@ -66,20 +57,29 @@ public class LayoutUtil {
         data.put("Start Time",subject.getStartTime());
         return data;
     }
-
     /**
-     * Sort the array list by the value of the object in it
-     * @param selectedSubjects the array list wanted to be sorted
-     * @param column the column selected to be sorted
+     * A method to sort the subject list by column
+     * @param selectedSubjects the subject list
+     * @param column the colum
      * @param isAscending the sort order
      */
     public static void sortByColumn(ArrayList<Subject> selectedSubjects, String column, boolean isAscending){
         switch (column){
             case "Grade":
                 if (isAscending){
-                    selectedSubjects.sort(Comparator.comparingInt(Subject::getGrade));
+                    selectedSubjects.sort(new Comparator<Subject>() {
+                        @Override
+                        public int compare(Subject s1, Subject s2) {
+                            return s1.getGrade() - s2.getGrade();
+                        }
+                    });
                 }else {
-                    selectedSubjects.sort((s1, s2) -> s2.getGrade() - s1.getGrade());
+                    selectedSubjects.sort(new Comparator<Subject>() {
+                        @Override
+                        public int compare(Subject s1, Subject s2) {
+                            return  s2.getGrade() - s1.getGrade();
+                        }
+                    });
                 }
                 break;
             case "Start Time":

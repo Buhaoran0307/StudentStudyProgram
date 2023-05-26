@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-/**
- * The utils package to operate data.
- */
 public class DataUtil {
 
     /**
@@ -38,11 +35,10 @@ public class DataUtil {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input).matches();
     }
-
     /**
-     * this method is used to calculate the GPA of the student
-     * @param student the student wanted to be calculated
-     * @return the GPA
+     * this method is to calculate GPA
+     * @param student the Student
+     * @return the obtained GPA
      */
     public static float calculateGPA(Student student) {
         ArrayList<Subject> selectSubject = student.getSelectedSubjects();
@@ -64,11 +60,10 @@ public class DataUtil {
         }
         return totalMarks / totalCredit;
     }
-
     /**
-     * this method is used to rank the GPA among all the students
-     * @param GPA the GPA marks
-     * @return the rank
+     * this method is to calculate the ranking of GPA
+     * @param GPA the GPA
+     * @return the ranking of GPA
      */
     public static int calculateGPARank(float GPA) {
         Student student;
