@@ -2,16 +2,17 @@ package layout;
 
 import ConstantPacket.ConstantParameters;
 import util.IOUtil;
-import util.LayoutUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-//this page is for demonstrating student achievement and roles taken
+
+/**
+ * this page is for demonstrating student achievement and roles taken
+ */
 public class AwardPage extends JPanel {
-    private ArrayList<String> achievement; //student's achievement
-    private ArrayList<String> role; //student's roles taken
+    private final ArrayList<String> achievement; //student's achievement
+    private final ArrayList<String> role; //student's roles taken
     public JButton back= new JButton(" back "); //back button to main page
     public AwardPage(int studentID) {
         //get data
@@ -31,18 +32,17 @@ public class AwardPage extends JPanel {
         //show achievement
         int lx = 100;
         int y = 80;
-        int space = 300;
         JLabel jAward1 = new JLabel("Award  :");
         jAward1.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         jAward1.setBounds(lx, y, 300, 30);
         this.add(jAward1);
-        String awards="";
+        StringBuilder awards= new StringBuilder();
         for(String a:achievement){
-            awards+=" "+a+"\n";
+            awards.append(" ").append(a).append("\n");
 
         }
-        if(awards.equals(""))awards="Not found anything";
-        JTextArea textArea = new JTextArea(awards);
+        if(awards.toString().equals("")) awards = new StringBuilder("Not found anything");
+        JTextArea textArea = new JTextArea(awards.toString());
         textArea.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         textArea.setBounds(0, 0, 400, 100);
         textArea.setLineWrap(true);
@@ -56,14 +56,14 @@ public class AwardPage extends JPanel {
         jrole.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         jrole.setBounds(lx, 220, 500, 30);
         this.add(jrole);
-        String roles="";
+        StringBuilder roles= new StringBuilder();
         for(String a:role){
-            roles+=" "+a+"\n";
+            roles.append(" ").append(a).append("\n");
 
         }
-        if(roles.equals(""))roles="Not found anything";
+        if(roles.toString().equals("")) roles = new StringBuilder("Not found anything");
         System.out.println(roles);
-        JTextArea textArea2 = new JTextArea(roles);
+        JTextArea textArea2 = new JTextArea(roles.toString());
         textArea2.setFont(new Font("Comic Sans Ms", Font.PLAIN, 20));
         textArea2.setBounds(0, 0, 400, 100);
         textArea2.setLineWrap(true);

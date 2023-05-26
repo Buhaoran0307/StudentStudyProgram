@@ -17,15 +17,15 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * ###### Table column name ######
- * ID --> subjectNo
- * Subject --> subjectName
- * Grade --> grade
- * Character --> character
- * Credit --> credit
- * Rank --> rank
- * Start Time --> startTime
+/*
+  ###### Table column name ######
+  ID --> subjectNo
+  Subject --> subjectName
+  Grade --> grade
+  Character --> character
+  Credit --> credit
+  Rank --> rank
+  Start Time --> startTime
  */
 
 /**
@@ -179,7 +179,6 @@ public class MainPage extends JPanel {
         this.checkAward.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
         this.checkAward.addActionListener(e -> {
 
-                MainFrame.localUser.getStudentNo();
             MainFrame.cardLayout.show(MainFrame.cards,"PersonalPage");
             AwardPage awardPage = new AwardPage(MainFrame.localUser.getStudentNo());
             MainFrame.cards.add(awardPage, "awardPage");
@@ -293,10 +292,6 @@ public class MainPage extends JPanel {
         //Put JTable into jScrollPane
         this.jScrollPane.setViewportView(this.subjectTable);
         this.jScrollPane.setAlignmentX(CENTER_ALIGNMENT);
-        int tableHeight = subjectTable.getRowHeight() * subjectTable.getRowCount();
-        if (tableHeight > 200) {
-            tableHeight = 200;
-        }
         this.jScrollPane.setPreferredSize(new Dimension(450, 200));
     }
 
@@ -350,7 +345,7 @@ class ImagePanel extends JPanel implements ActionListener {
 
     /**
      * Use JPanel to contain a JButton which shows user's photo
-     * @param image
+     * @param image User's photo
      */
     public ImagePanel(Image image) {
         if (image == null) {

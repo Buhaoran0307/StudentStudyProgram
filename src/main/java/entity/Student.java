@@ -1,9 +1,8 @@
 package entity;
+import java.util.ArrayList;
 /**
  * This class includes the student's personal information
  * */
-import java.util.ArrayList;
-
 public class Student {
     /**
      * the student's name

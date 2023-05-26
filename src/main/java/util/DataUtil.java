@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+/**
+ * The utils package to operate data.
+ */
 public class DataUtil {
 
     /**

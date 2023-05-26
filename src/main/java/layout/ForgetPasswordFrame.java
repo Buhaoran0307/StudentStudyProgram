@@ -15,28 +15,31 @@ import static ConstantPacket.ConstantParameters.studentMap;
 import static util.IOUtil.readJson;
 import static util.IOUtil.writeStudentJson;
 
+/**
+ * Create forget password function
+ */
 public class ForgetPasswordFrame extends JFrame {
     Container container = this.getContentPane();
     /**
      *this is used to get the input of the username
      */
-    private JTextField userNameField;
+    private final JTextField userNameField;
     /**
      * this field is used to get the input of the user password
      */
-    private JPasswordField newPasswordField;
+    private final JPasswordField newPasswordField;
     /**
      * this field to used to get the input of the phone number
      */
-    private JTextField phoneNumberFiled;
+    private final JTextField phoneNumberFiled;
     /**
      * the confirm button that get the input data for further process
      */
-    private JButton confirmButton;
+    private final JButton confirmButton;
     /**
      * this button is used to quit the forget password frame and back to the main page
      */
-    private JButton backButton;
+    private final JButton backButton;
 
     public ForgetPasswordFrame() {
         //set forget password page's frame
@@ -199,7 +202,7 @@ public class ForgetPasswordFrame extends JFrame {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong user name", "wrong userName", JOptionPane.NO_OPTION);
+                JOptionPane.showMessageDialog(ForgetPasswordFrame.this, "wrong user name", "wrong userName", JOptionPane.INFORMATION_MESSAGE);
             }
         }
 
